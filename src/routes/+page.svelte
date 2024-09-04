@@ -5,10 +5,13 @@
 	import BlurFade from '$components/BlurFade.svelte';
 	import LetterPullUp from '$components/LetterPullUp.svelte';
 	import Confetti from '$components/ui/Confetti.svelte';
+	import { goto } from '$app/navigation';
+	import { beforeNavigate } from '$app/navigation';
 
 	let mounted = $state(false);
 	let textFinished = $state(false);
 	let headerRendered = $state(false);
+	let isNavigating = $state(false);
 
 	const wiggle = spring(
 		{ x: 0, y: 0 },
@@ -51,6 +54,10 @@
 	const handleEmailClick = () => {
 		window.location.href = 'mailto:andrew@rubes.dev';
 	};
+
+	const handleNavigation = (path: string) => {
+		goto(path);
+	};
 </script>
 
 <svelte:head>
@@ -59,7 +66,8 @@
 
 <section
 	class="flex flex-col gap-4 w-full max-w-none"
-	in:fade={{ duration: 300, delay: 1000 }}
+	in:fade={{ duration: 600, delay: 250 }}
+	out:fade={{ duration: 300 }}
 	onintroendcapture={onHeaderRendered}
 >
 	{#if mounted}
@@ -89,38 +97,49 @@
 				<p in:fly={{ y: -50, duration: 700, delay: 200, easing: quintOut }}>
 					and yeah, it sort of is... but it's also a lot more than that.
 				</p>
+				<p
+					in:fly={{ y: 100, duration: 700, delay: 900, easing: quintOut }}
+					onintroendcapture={onanimend}
+				>
+					for some odd reason you've made it here. so stick around and find out what i'm all about.
+				</p>
 			{/if}
-			<p
-				in:fly={{ y: 100, duration: 1000, delay: 2000, easing: quintOut }}
-				onintroendcapture={onanimend}
-			>
-				for some odd reason you've made it here. so stick around and find out what i'm all about.
-			</p>
 		</div>
 	{/if}
 </section>
 
-<section class="flex-grow flex flex-col w-full max-w-none gap-8 h-full justify-center">
+<section
+	class="flex-grow flex flex-col w-full max-w-none gap-8 h-full justify-center"
+	out:fly={{ y: -50, duration: 300, easing: quintOut }}
+>
 	{#if textFinished}
 		<BlurFade class="flex flex-col gap-2" duration={0.5}>
-			<div class="flex gap-2 text-2xl md:text-4xl items-center">
+			<div class="flex gap-2 text-2xl md:text-4xl items-center" out:fade={{ duration: 300 }}>
 				🔮
 				{#if headerRendered}
 					<LetterPullUp words="discover" delay={0.1} class="text-2xl text-left" />
 				{/if}
 			</div>
-			<div class="flex flex-col gap-4 md:py-4 py-2">
+			<div
+				class="flex flex-col gap-4 md:py-4 py-2"
+				out:fly={{ y: 50, duration: 300, easing: quintOut }}
+			>
 				<Confetti options={{ particleCount: 25 }}>
 					<button
 						class="btn btn-secondary btn-block btn-lg"
 						in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
+						out:fly={{ y: -50, duration: 300, easing: quintOut }}
+						disabled={isNavigating}
 					>
 						show me something cool
 					</button>
 				</Confetti>
 				<button
 					class="btn btn-primary btn-block btn-lg"
+					onclick={() => handleNavigation('/projects')}
 					in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
+					out:fly={{ y: -50, duration: 300, easing: quintOut }}
+					disabled={isNavigating}
 				>
 					check out my work
 				</button>
@@ -129,18 +148,20 @@
 	{/if}
 </section>
 
-{#if textFinished}
-	<section class="flex flex-col w-full max-w-none gap-8 mt-auto">
-		<span in:fade={{ duration: 500, delay: 500, easing: quintOut }}>
-			<BlurFade duration={1} delay={1.75}>
-				i'd love to hear from you. love the site? any questions? <a
-					class="text-primary underline decoration-wavy decoration-1 underline-offset-4"
-					href="mailto:andrew@rubes.dev">reach out!</a
-				>
-			</BlurFade>
-		</span>
-	</section>
-{/if}
+<div out:fly={{ y: -25, duration: 500 }}>
+	{#if textFinished}
+		<section class="flex flex-col w-full max-w-none gap-8 mt-auto" out:fade={{ duration: 300 }}>
+			<span in:fade={{ duration: 500, delay: 500, easing: quintOut }}>
+				<BlurFade duration={0.75} delay={1.5}>
+					i'd love to hear from you. love the site? any questions? <a
+						class="text-primary underline decoration-wavy decoration-1 underline-offset-4"
+						href="mailto:andrew@rubes.dev">reach out!</a
+					>
+				</BlurFade>
+			</span>
+		</section>
+	{/if}
+</div>
 
 <style lang="postcss">
 	@keyframes wiggle {

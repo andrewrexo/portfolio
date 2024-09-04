@@ -2,6 +2,8 @@
 	import { Motion, AnimatePresence, useAnimation } from 'svelte-motion';
 	import { inview } from 'svelte-inview';
 	import { cn } from '$lib/utils';
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	export let duration = 0.4;
 	export let delay = 0;
 	export let yOffset = 6;
