@@ -110,7 +110,7 @@
 				{/if}
 			</div>
 			<div class="flex flex-col gap-4 md:py-4 py-2">
-				<Confetti options={{ particleCount: 100, speedHorz: 15 }}>
+				<Confetti options={{ particleCount: 250 }}>
 					<button
 						class="btn btn-secondary btn-block btn-md md:btn-lg"
 						in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
