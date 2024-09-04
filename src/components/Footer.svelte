@@ -1,10 +1,10 @@
-<footer class="bg-base-200 text-base-content">
+<footer class="bg-base-200 text-base-content flex-grow md:flex-grow-0 max-h-[100px]">
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex flex-col md:flex-row justify-between items-center">
-			<div class="mb-4 md:mb-0">
+			<div class="mb-2 md:mb-0">
 				<p>&copy; 2024 rubes.dev / all rights reserved.</p>
 			</div>
-			<div class="flex space-x-4">
+			<div class="flex">
 				<a
 					href="https://github.com/andrewrexo"
 					target="_blank"

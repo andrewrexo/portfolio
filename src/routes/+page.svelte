@@ -58,22 +58,26 @@
 </svelte:head>
 
 <section
-	class=" flex flex-col gap-4 w-full max-w-none"
+	class="flex flex-col gap-4 w-full max-w-none"
 	in:fade={{ duration: 300, delay: 1000 }}
 	onintroendcapture={onHeaderRendered}
 >
 	{#if mounted}
 		<BlurFade duration={0.5} class="">
-			<h1 class="font-bold text-4xl md:text-6xl pb-8">
-				👋 hey! i'm
-				<a
-					class="text-primary underline decoration-wavy decoration-1 underline-offset-8"
-					href="mailto:andrew@rubes.dev"
-				>
-					andrew.
-				</a>
+			<h1 class="font-bold text-4xl md:text-6xl pb-8 flex gap-3">
+				<span>
+					👋&nbsp; hey! i'm
+					<a
+						class="text-primary underline decoration-wavy decoration-1 underline-offset-8"
+						href="mailto:andrew@rubes.dev"
+					>
+						andrew.
+					</a>
+				</span>
 			</h1>
-			<p>well i'm actually a website. buuut, you're checking out his website. cool!</p>
+			<p>
+				well i'm actually a website. buuut, you're checking out <i>this guy's</i> website. cool!
+			</p>
 		</BlurFade>
 	{/if}
 	{#if mounted}
@@ -87,7 +91,7 @@
 				</p>
 			{/if}
 			<p
-				in:fly={{ y: 50, duration: 2000, delay: 2000, easing: quintOut }}
+				in:fly={{ y: 50, duration: 1000, delay: 2000, easing: quintOut }}
 				onintroendcapture={onanimend}
 			>
 				for some odd reason you've made it here. so stick around and find out what i'm all about.
@@ -96,28 +100,29 @@
 	{/if}
 </section>
 
-<section class="flex-grow md:py-8 h-full flex flex-col w-full max-w-none gap-8">
+<section class="flex-grow flex flex-col w-full max-w-none gap-8">
 	{#if textFinished}
 		<BlurFade class="flex flex-col gap-2" duration={0.5}>
-			<div class="flex flex-col sm:flex-row gap-4 md:pb-4">
+			<div class="flex gap-2 text-2xl md:text-4xl items-center">
+				🔮
 				{#if headerRendered}
-					<LetterPullUp words="decide your journey" delay={0.05} class="text-lg text-left" />
+					<LetterPullUp words="discover" delay={0.1} class="text-2xl text-left" />
 				{/if}
 			</div>
-			<div class="flex flex-col gap-4">
+			<div class="flex flex-col gap-4 md:py-4 py-2">
 				<Confetti options={{ particleCount: 200 }}>
 					<button
 						class="btn btn-secondary btn-block btn-md md:btn-lg"
 						in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
 					>
-						show me something fun.
+						show me something cool
 					</button>
 				</Confetti>
 				<button
 					class="btn btn-primary btn-block btn-md md:btn-lg"
 					in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
 				>
-					just show me the projects.
+					my work
 				</button>
 			</div>
 		</BlurFade>
@@ -125,13 +130,13 @@
 </section>
 
 {#if textFinished}
-	<section class="flex flex-col w-full max-w-none gap-8">
+	<section class="flex flex-col w-full max-w-none gap-8 mt-auto">
 		<span in:fade={{ duration: 500, delay: 500, easing: quintOut }}>
-			<BlurFade duration={1.25} delay={1.25}>
-				if you liked this experience, <a
+			<BlurFade duration={1} delay={2}>
+				i'd love to hear from you. love the site? any questions? <a
 					class="text-primary underline decoration-wavy decoration-1 underline-offset-4"
 					href="mailto:andrew@rubes.dev">reach out!</a
-				> i'm currently looking for new opportunities.
+				>
 			</BlurFade>
 		</span>
 	</section>

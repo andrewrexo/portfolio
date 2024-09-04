@@ -12,15 +12,14 @@
 </script>
 
 {#if mounted}
-	<div class="min-h-screen flex flex-col overflow-hidden">
-		<DotPattern fillColor="rgb(163 163 163 / 0.15)">
+	<div class="flex flex-col min-h-screen overflow-hidden">
+		<DotPattern fillColor="rgb(163 163 163 / 0.15)" class="flex-grow flex flex-col">
 			<main
-				class="flex-grow mx-auto px-4 md:px-12 md:py-12 py-8 container max-w-6xl flex flex-col gap-8 md:gap-18"
+				class="flex-grow flex flex-col mx-auto py-8 px-4 md:px-12 md:pt-12 container max-w-6xl gap-8 md:gap-8"
 			>
 				{@render children()}
 			</main>
+			<Footer />
 		</DotPattern>
-
-		<Footer />
 	</div>
 {/if}
