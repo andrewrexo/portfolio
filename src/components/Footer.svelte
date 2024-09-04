@@ -1,4 +1,12 @@
-<footer class="bg-base-200 text-base-content flex-grow md:flex-grow-0 max-h-[100px]">
+<script>
+	import { fly } from 'svelte/transition';
+</script>
+
+<footer
+	class="bg-base-200 text-base-content"
+	in:fly={{ duration: 500, y: 100 }}
+	out:fly={{ duration: 500, y: 100 }}
+>
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex flex-col md:flex-row justify-between items-center">
 			<div class="mb-2 md:mb-0">

@@ -22,8 +22,10 @@
 	);
 
 	$effect(() => {
-		mounted = true;
-		setTimeout(startWiggle, 500);
+		setTimeout(() => {
+			mounted = true;
+			startWiggle();
+		}, 500);
 	});
 
 	const startWiggle = () => {
@@ -66,13 +68,13 @@
 
 <section
 	class="flex flex-col gap-4 w-full max-w-none"
-	in:fade={{ duration: 600, delay: 250 }}
+	in:fade={{ duration: 400, delay: 100 }}
 	out:fade={{ duration: 300 }}
 	onintroendcapture={onHeaderRendered}
 >
 	{#if mounted}
 		<BlurFade duration={0.5} class="">
-			<h1 class="font-bold text-4xl md:text-6xl pb-8 flex gap-3">
+			<h1 class="font-bold text-4xl md:text-6xl pb-8 flex gap-3 py-8">
 				<span>
 					👋&nbsp; hey! i'm
 					<a
@@ -83,34 +85,33 @@
 					</a>
 				</span>
 			</h1>
-			<p>
-				well i'm actually a website. buuut, you're checking out <i>this guy's</i> website. cool!
-			</p>
 		</BlurFade>
 	{/if}
 	{#if mounted}
 		<div class="flex flex-col gap-4 max-w-none" in:fade={{ duration: 600, delay: 500 }}>
-			<p in:fly={{ y: -50, duration: 500, delay: 700, easing: quintOut }}>
+			<p in:fly={{ y: -50, duration: 400, delay: 700 }}>
+				i'm actually a website. buuut, you're checking out <i>his</i> website. cool!
+			</p>
+			<p in:fly={{ y: -50, duration: 400, delay: 1000, easing: quintOut }}>
 				i know what you're thinking. oh, great! another portfolio site.
 			</p>
-			{#if headerRendered}
-				<p in:fly={{ y: -50, duration: 700, delay: 200, easing: quintOut }}>
-					and yeah, it sort of is... but it's also a lot more than that.
-				</p>
-				<p
-					in:fly={{ y: 100, duration: 700, delay: 900, easing: quintOut }}
-					onintroendcapture={onanimend}
+			<p
+				in:fly={{ y: -50, duration: 400, delay: 1300, easing: quintOut }}
+				onintroendcapture={onanimend}
+			>
+				and yeah, it sort of is... <span
+					in:fly={{ y: 100, duration: 700, delay: 3000, easing: quintOut }}
 				>
-					for some odd reason you've made it here. so stick around and find out what i'm all about.
-				</p>
-			{/if}
+					but you're already here, so go on and click around for a bit!
+				</span>
+			</p>
 		</div>
 	{/if}
 </section>
 
 <section
 	class="flex-grow flex flex-col w-full max-w-none gap-8 h-full justify-center"
-	out:fly={{ y: -50, duration: 300, easing: quintOut }}
+	out:fly={{ y: 50, duration: 500, easing: quintOut }}
 >
 	{#if textFinished}
 		<BlurFade class="flex flex-col gap-2" duration={0.5}>
@@ -148,9 +149,12 @@
 	{/if}
 </section>
 
-<div out:fly={{ y: -25, duration: 500 }}>
+<div out:fly={{ y: 50, duration: 500 }}>
 	{#if textFinished}
-		<section class="flex flex-col w-full max-w-none gap-8 mt-auto" out:fade={{ duration: 300 }}>
+		<section
+			class="flex flex-col w-full max-w-none gap-8 mt-auto py-8"
+			out:fade={{ duration: 300 }}
+		>
 			<span in:fade={{ duration: 500, delay: 500, easing: quintOut }}>
 				<BlurFade duration={0.75} delay={1.5}>
 					i'd love to hear from you. love the site? any questions? <a
