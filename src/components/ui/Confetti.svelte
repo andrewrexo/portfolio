@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-
 	interface BaseParticle {
 		element: HTMLElement | SVGSVGElement;
 		left: number;
@@ -26,6 +24,12 @@
 		speedHorz?: number;
 		speedUp?: number;
 	}
+
+	type ConfettiProps = {
+		options: CoolParticleOptions;
+		containerElement?: HTMLElement;
+		children: any;
+	};
 
 	let instanceCounter = 0;
 
@@ -217,10 +221,9 @@
 		};
 	}
 
-	export let options: CoolParticleOptions;
-	let containerElement: HTMLElement;
+	let { options, containerElement, children }: ConfettiProps = $props();
 
-	onMount(() => {
+	$effect(() => {
 		if (containerElement) {
 			const cleanup = applyParticleEffect(containerElement, options);
 			return cleanup;
@@ -229,5 +232,5 @@
 </script>
 
 <div bind:this={containerElement} class="z-50">
-	<slot>Hello</slot>
+	{@render children()}
 </div>
