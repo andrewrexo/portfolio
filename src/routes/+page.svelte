@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { quintOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import { spring, tweened } from 'svelte/motion';
+	import { spring } from 'svelte/motion';
 	import BlurFade from '$components/BlurFade.svelte';
 	import LetterPullUp from '$components/LetterPullUp.svelte';
 	import Confetti from '$components/ui/Confetti.svelte';
@@ -82,16 +82,16 @@
 	{/if}
 	{#if mounted}
 		<div class="flex flex-col gap-4 max-w-none" in:fade={{ duration: 600, delay: 500 }}>
-			<p in:fly={{ y: -20, duration: 300, delay: 700, easing: quintOut }}>
+			<p in:fly={{ y: -50, duration: 500, delay: 700, easing: quintOut }}>
 				i know what you're thinking. oh, great! another portfolio site.
 			</p>
 			{#if headerRendered}
-				<p in:fly={{ y: -20, duration: 1000, delay: 200, easing: quintOut }}>
+				<p in:fly={{ y: -50, duration: 700, delay: 200, easing: quintOut }}>
 					and yeah, it sort of is... but it's also a lot more than that.
 				</p>
 			{/if}
 			<p
-				in:fly={{ y: 50, duration: 1000, delay: 2000, easing: quintOut }}
+				in:fly={{ y: 100, duration: 1000, delay: 2000, easing: quintOut }}
 				onintroendcapture={onanimend}
 			>
 				for some odd reason you've made it here. so stick around and find out what i'm all about.
@@ -100,7 +100,7 @@
 	{/if}
 </section>
 
-<section class="flex-grow flex flex-col w-full max-w-none gap-8">
+<section class="flex-grow flex flex-col w-full max-w-none gap-8 h-full justify-center">
 	{#if textFinished}
 		<BlurFade class="flex flex-col gap-2" duration={0.5}>
 			<div class="flex gap-2 text-2xl md:text-4xl items-center">
@@ -110,19 +110,19 @@
 				{/if}
 			</div>
 			<div class="flex flex-col gap-4 md:py-4 py-2">
-				<Confetti options={{ particleCount: 250 }}>
+				<Confetti options={{ particleCount: 25 }}>
 					<button
-						class="btn btn-secondary btn-block btn-md md:btn-lg"
+						class="btn btn-secondary btn-block btn-lg"
 						in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
 					>
 						show me something cool
 					</button>
 				</Confetti>
 				<button
-					class="btn btn-primary btn-block btn-md md:btn-lg"
+					class="btn btn-primary btn-block btn-lg"
 					in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
 				>
-					my work
+					check out my work
 				</button>
 			</div>
 		</BlurFade>
@@ -132,7 +132,7 @@
 {#if textFinished}
 	<section class="flex flex-col w-full max-w-none gap-8 mt-auto">
 		<span in:fade={{ duration: 500, delay: 500, easing: quintOut }}>
-			<BlurFade duration={1} delay={2}>
+			<BlurFade duration={1} delay={1.75}>
 				i'd love to hear from you. love the site? any questions? <a
 					class="text-primary underline decoration-wavy decoration-1 underline-offset-4"
 					href="mailto:andrew@rubes.dev">reach out!</a

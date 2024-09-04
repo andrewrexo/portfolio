@@ -140,24 +140,31 @@
 		let animationFrame: number | undefined;
 
 		let lastParticleTimestamp = 0;
-		const particleGenerationDelay = 30;
+		const particleGenerationDelay = 20;
 
-		function loop() {
-			const currentTime = performance.now();
-			if (
-				autoAddParticle &&
-				particles.length < limit &&
-				currentTime - lastParticleTimestamp > particleGenerationDelay
-			) {
-				generateParticle();
-				lastParticleTimestamp = currentTime;
+		let lastFrameTime = 0;
+		const targetFPS = 90;
+		const frameInterval = 1000 / targetFPS;
+
+		function loop(currentTime: number) {
+			if (currentTime - lastFrameTime >= frameInterval) {
+				if (
+					autoAddParticle &&
+					particles.length < limit &&
+					currentTime - lastParticleTimestamp > particleGenerationDelay
+				) {
+					generateParticle();
+					lastParticleTimestamp = currentTime;
+				}
+
+				refreshParticles();
+				lastFrameTime = currentTime;
 			}
 
-			refreshParticles();
 			animationFrame = requestAnimationFrame(loop);
 		}
 
-		loop();
+		animationFrame = requestAnimationFrame(loop);
 
 		const isTouchInteraction = 'ontouchstart' in window;
 
