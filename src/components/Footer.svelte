@@ -12,7 +12,7 @@
   <div class="container mx-auto px-4">
     <div
       in:fade={{ duration: 500, easing: quintOut }}
-      class="flex w-full max-w-none flex-col items-center pb-2 text-center md:flex-row"
+      class="flex w-full text-xs max-w-none flex-col items-center pb-4 md:pb-0 text-center md:flex-row"
       out:fade={{ duration: 300 }}
     >
       <BlurFade duration={0.5} delay={1.5}>

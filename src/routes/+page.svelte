@@ -134,14 +134,17 @@
 <AnimatePresence show={!isNavigating && headerRendered}>
   <Motion
     let:motion
-    initial={{ opacity: 0 }}
+    initial={{ opacity: 0, translateY: 50 }}
     animate={{ opacity: 1, translateY: 0 }}
     exit={{
       opacity: 0
     }}
     transition={{
-      duration: 0.5,
-      ease: 'easeInOut'
+      duration: 0.3,
+      ease: 'easeInOut',
+      type: 'spring',
+      stiffness: 100,
+      damping: 10
     }}
   >
     <div class="flex flex-col gap-4 py-12" use:motion>

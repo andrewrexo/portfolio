@@ -38,7 +38,7 @@
       use:inview={{ rootMargin: inViewMargin, unobserveOnEnter: once }}
       use:motion
       on:inview_change={({ detail }) => {
-        isInView = detail.inView ? 'visible' : 'hidden';
+        isInView = detail.inView ? 'visible' : 'visible';
       }}
       class={cn(className)}
     >
