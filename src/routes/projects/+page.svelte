@@ -18,7 +18,7 @@
 			id: 2,
 			title: 'milkshake',
 			description: 'Embeddable widget for cross-chain swaps',
-			image: '/milkshake.png',
+			image: '/milkshake.webp',
 			tags: ['Widget', 'Cross-chain', 'DeFi']
 		},
 		{
@@ -42,11 +42,20 @@
 	let isHeaderFixed = $state(false);
 	let scrollY = $state(0);
 
-	$effect(() => {
-		setTimeout(() => {
-			isLoaded = true;
-		}, 500);
-	});
+  let imagesLoaded = $state(0);
+  let totalImages = projects.length;
+
+  $effect(() => {
+    if (imagesLoaded === totalImages) {
+      setTimeout(() => {
+        isLoaded = true;
+      }, 100);
+    }
+  });
+
+  function imageLoaded() {
+    imagesLoaded++;
+  }
 
 	const handleNavigation = (path: string) => {
 		scrollY = window.scrollY;
@@ -67,10 +76,25 @@
 		};
 	});
 
+  onMount(() => {
+    projects.forEach(project => {
+        const img = new Image();
+        img.src = project.image;
+        img.onload = imageLoaded;
+    });
+    console.log(imagesLoaded, totalImages);
+  });
+
 	afterNavigate(() => {
 		scrollTo(0, scrollY);
 	});
 </script>
+
+<svelte:head>
+  {#each projects as project}
+    <link rel="preload" href={project.image} as="image" />
+  {/each}
+</svelte:head>
 
 <div class="projects-page" out:fade={{ duration: 400, delay: 100 }}>
 	<AnimatePresence show={isLoaded && !transitioning}>
@@ -109,7 +133,7 @@
 				</div>
 			</BlurFade>
 		</header>
-		<main class="projects-content pt-8">
+		<main class="projects-content py-8">
 			<main class="projects-content">
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 					{#each projects as project, index (project.id)}
@@ -117,10 +141,15 @@
 							<div class="project-card" in:fly={{ y: 50, duration: 500, delay: index * 100 }}>
 								<div class="overflow-hidden rounded-lg shadow-lg duration-300 bg-base-200 h-full">
 									<img
-										src={project.image}
-										alt={project.title}
-										class="w-full h-48 object-cover object-center"
-									/>
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-60 object-cover object-center transition-opacity duration-300"
+                    style="opacity: 0"
+                    on:load|once={() => {
+                      imageLoaded();
+                      (event.target as HTMLImageElement).style.opacity = '1';
+                    }}
+                  />
 									<div class="p-6">
 										<h2 class="text-2xl font-bold mb-2 text-primary">{project.title}</h2>
 										<p class="text-base-content/80 mb-4">{project.description}</p>
@@ -189,4 +218,17 @@
 	.project-card {
 		@apply transform transition-transform duration-300 hover:-translate-y-2;
 	}
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .5;
+    }
+  }
 </style>
