@@ -3,7 +3,9 @@ import typography from '@tailwindcss/typography';
 import daisyui from 'daisyui';
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-
+	daisyui: {
+		themes: ['forest']
+	},
 	plugins: [
 		daisyui,
 		typography,
