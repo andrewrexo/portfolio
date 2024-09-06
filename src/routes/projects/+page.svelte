@@ -105,7 +105,7 @@
     >
       <BlurFade>
         <div
-          class="fixed-content flex items-center gap-2 px-4 py-4 md:px-8"
+          class="fixed-content flex items-center gap-2 px-4 py-6 md:px-8 md:py-8"
           in:fly={{ duration: 400, y: -50 }}
           out:fly={{ duration: 400, y: -50, delay: 100 }}
         >
@@ -133,7 +133,7 @@
         </div>
       </BlurFade>
     </header>
-    <main class="projects-content py-8">
+    <main class="projects-content pt-8 md:pt-12">
       <main class="projects-content">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {#each projects as project, index (project.id)}
