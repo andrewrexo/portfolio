@@ -1,11 +1,24 @@
-import daisyui from 'daisyui';
+import plugin from 'tailwindcss/plugin';
 import typography from '@tailwindcss/typography';
-
-/** @type {import('tailwindcss').Config} */
+import daisyui from 'daisyui';
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-	theme: {
-		extend: {}
-	},
-	plugins: [daisyui, typography]
+
+	plugins: [
+		daisyui,
+		typography,
+		plugin(function ({ addVariant, matchUtilities, theme }) {
+			addVariant('hocus', ['&:hover', '&:focus']);
+			// Square utility
+			matchUtilities(
+				{
+					square: (value) => ({
+						width: value,
+						height: value
+					})
+				},
+				{ values: theme('spacing') }
+			);
+		})
+	]
 };

@@ -3,7 +3,7 @@
 </script>
 
 <footer
-	class="bg-base-200 text-base-content"
+	class="bg-base-100/80 backdrop-blur-sm shadow-md text-base-content mt-2"
 	in:fly={{ duration: 500, y: 100 }}
 	out:fly={{ duration: 500, y: 100 }}
 >

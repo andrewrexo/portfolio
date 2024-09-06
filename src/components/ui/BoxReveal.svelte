@@ -29,7 +29,7 @@
 </script>
 
 <div
-	class="relative overflow-hidden border border-dashed hover:border-primary border-base-content/50 hover:shadow-xl btn h-full p-0 m-0 block transition-all"
+	class="relative h-full p-0 m-0 block"
 	style="width:{width}"
 	use:inview
 	on:inview_enter={viewEnter}
@@ -46,7 +46,7 @@
 		animate={mainControls}
 		transition={{ duration: 0.5, ease: 'easeInOut', type: 'spring', stiffness: 75 }}
 	>
-		<div use:motion>
+		<div use:motion class="rounded-lg hover:border-primary border-base-content/50">
 			{@render children()}
 		</div>
 	</Motion>

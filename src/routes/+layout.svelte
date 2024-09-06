@@ -23,7 +23,7 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-screen overflow-hidden">
-	<DotPattern fillColor="rgb(163 163 163 / 0.15)" class="flex-grow flex flex-col">
+	<DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex-grow flex flex-col">
 		{#if mounted}
 			<main class="flex-grow flex flex-col mx-auto px-4 md:px-12 container max-w-6xl">
 				{@render children()}

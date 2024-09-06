@@ -40,7 +40,7 @@
 			on:inview_change={({ detail }) => {
 				isInView = detail.inView ? 'visible' : 'hidden';
 			}}
-			class={cn(className)}
+			class={cn(className, 'max-w-lg')}
 		>
 			<slot>Default</slot>
 		</div>
