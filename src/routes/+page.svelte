@@ -63,10 +63,6 @@
   };
 </script>
 
-<svelte:head>
-  <title>Andrew's Portfolio - Frontend Developer</title>
-</svelte:head>
-
 <section
   class="flex w-full gap-4 py-8 text-5xl font-bold md:text-6xl"
   in:fade={{ duration: 400, delay: 100 }}
