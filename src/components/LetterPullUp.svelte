@@ -1,37 +1,69 @@
 <script lang="ts">
-	import { cn } from '$lib/utils';
-	import { AnimatePresence, Motion } from 'svelte-motion';
+  import { cn } from '$lib/utils';
+  import type { Snippet } from 'svelte';
+  import { elasticOut } from 'svelte/easing';
 
-	export let words = 'Letter Pull Up';
-	export let delay = 0.05;
-	let className: any = '';
-	export { className as class };
-	let pullupVariant = {
-		hidden: { y: 100, opacity: 0 },
-		visible: (i: any) => ({
-			y: 0,
-			opacity: 1,
-			transition: { delay: i * delay }
-		})
-	};
-	let letters = words.split('');
+  let {
+    words,
+    delay = 50,
+    className,
+    children
+  }: { words: string; delay?: number; className: string; children?: Snippet } = $props();
+
+  let letters = words.split('');
+  let visible = $state(false);
+
+  $effect(() => {
+    if (visible) return;
+    visible = true;
+  });
+
+  const slideSpringFly = (_: HTMLElement, { y = 100, delay = 50, duration = 400 } = {}) => {
+    return {
+      delay,
+      duration,
+      css: (t: number) => {
+        const eased = elasticOut(t);
+        return `
+					transform: translateY(${y - y * eased}px);
+          opacity: ${t};
+        `;
+        // maybe use in future: filter: brightness(${eased * t}) for highlight effect
+      }
+    };
+  };
 </script>
 
 <div class="flex flex-wrap md:flex-nowrap">
-	<!-- <AnimatePresence let:item list={[{ key: words }]}> -->
-	{#each letters as letter, i}
-		<Motion variants={pullupVariant} initial="hidden" animate="visible" custom={i} let:motion>
-			<h1
-				class={cn('text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl', className)}
-				use:motion
-			>
-				{#if letter === ' '}
-					<span>&nbsp;</span>
-				{:else}
-					{letter}
-				{/if}
-			</h1>
-		</Motion>
-	{/each}
-	<!-- </AnimatePresence> -->
+  {#if visible}
+    <div
+      class="mt-1 flex items-center text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl"
+      transition:slideSpringFly={{
+        y: -100,
+        delay: delay * 1.5 + 300
+      }}
+    >
+      {#if children}
+        {@render children()}
+      {/if}
+    </div>
+  {/if}
+
+  {#each letters as letter, i (i)}
+    {#if visible}
+      <h1
+        class={cn('text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl', className)}
+        transition:slideSpringFly={{
+          y: -100,
+          delay: i * delay * 1.5 + 500
+        }}
+      >
+        {#if letter === ' '}
+          <span>&nbsp;</span>
+        {:else}
+          {letter}
+        {/if}
+      </h1>
+    {/if}
+  {/each}
 </div>
