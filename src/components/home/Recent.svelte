@@ -32,7 +32,7 @@
       {#each posts as post}
         {#if mounted}
           <button
-            class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
+            class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md outline-none brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
             onclick={() => goto(`/post/${post.slug}`)}
             transition:fly={{ x: 100, duration: 1000 }}
           >
