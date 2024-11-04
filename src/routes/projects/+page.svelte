@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { onMount } from 'svelte';
   import { blur } from 'svelte/transition';
 
   let currentIndex = $state(0);
@@ -95,10 +94,10 @@
 </script>
 
 <div
+  class="bg-background h-dvh w-full overflow-hidden overscroll-none"
   onwheel={handleScroll}
   ontouchstart={handleTouchStart}
   ontouchmove={handleTouchMove}
-  class="bg-background h-dvh w-full overflow-hidden"
 >
   {#if projects.length > 0}
     <div
@@ -107,7 +106,10 @@
              transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
     >
       {#each projects as project, i}
-        <div class="absolute left-0 top-0 h-full w-full" style="transform: translateY({i * 100}vh)">
+        <div
+          class="absolute left-0 top-0 h-full w-full overscroll-none"
+          style="transform: translateY({i * 100}vh)"
+        >
           <div
             class="relative flex h-full w-full items-center justify-center"
             in:blur={{ duration: 300 }}

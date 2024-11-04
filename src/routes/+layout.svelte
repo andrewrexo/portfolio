@@ -11,14 +11,29 @@
 
   let mounted = $state(false);
   let hasViewTransitions = $state(false);
-
-  let showFooter = $derived($page.url.pathname !== '/projects');
+  let isProject = $derived($page.url.pathname === '/projects');
+  let showFooter = $derived(!isProject);
 
   $effect(() => {
     if (mounted) return;
 
     mounted = true;
     hasViewTransitions = 'startViewTransition' in document;
+  });
+
+  $effect(() => {
+    if (isProject) {
+      document.documentElement.style.cssText = 'overscroll-behavior-y: none;';
+      document.body.style.cssText = 'overscroll-behavior-y: none;';
+    } else {
+      document.documentElement.style.cssText = '';
+      document.body.style.cssText = '';
+    }
+
+    return () => {
+      document.documentElement.style.cssText = '';
+      document.body.style.cssText = '';
+    };
   });
 
   onNavigate((navigation) => {
@@ -49,11 +64,10 @@
       out:fade={{ duration: 150 }}
     >
       {@render children()}
+      {#if showFooter}
+        <Footer />
+      {/if}
     </div>
-
-    {#if showFooter}
-      <Footer />
-    {/if}
   </DotPattern>
 </main>
 
