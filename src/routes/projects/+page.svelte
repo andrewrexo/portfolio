@@ -99,7 +99,7 @@
     onwheel={handleScroll}
     ontouchstart={handleTouchStart}
     ontouchmove={handleTouchMove}
-    class="bg-background h-screen w-screen overflow-hidden"
+    class="bg-background h-dvh w-full overflow-hidden"
   >
     {#if projects.length > 0}
       <div
@@ -109,7 +109,7 @@
       >
         {#each projects as project, i}
           <div
-            class="absolute left-0 top-0 h-screen w-full"
+            class="absolute left-0 top-0 h-full w-full"
             style="transform: translateY({i * 100}vh)"
           >
             <div

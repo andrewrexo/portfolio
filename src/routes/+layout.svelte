@@ -41,11 +41,11 @@
 
 <Head />
 
-<main class="flex min-h-svh flex-col overflow-hidden">
+<main class="flex min-h-dvh flex-col">
   <DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex min-h-full flex-col">
     {#if mounted}
       <div
-        class="container mx-auto min-h-full max-w-6xl"
+        class="container mx-auto min-h-full max-w-6xl {showFooter ? 'pb-14' : ''}"
         in:fade={{ duration: 200, delay: 150 }}
         out:fade={{ duration: 150 }}
       >

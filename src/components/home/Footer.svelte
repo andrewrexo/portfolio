@@ -4,14 +4,14 @@
 
   type Position = 'sticky' | 'fixed';
 
-  let { position = 'sticky' }: { position?: Position } = $props();
+  let { position = 'fixed' }: { position?: Position } = $props();
 
   const githubUrl = 'https://github.com/andrewrexo';
   const linkedinUrl = 'https://linkedin.com/in/andrew-rubenstein-702807261';
 </script>
 
 <footer
-  class="{position} bottom-0 left-0 right-0 max-h-16 bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
+  class="{position} bottom-0 max-h-16 bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
   in:fly={{ duration: 500, y: 100, delay: 300, easing: quintOut }}
   out:fly={{ duration: 500, y: 100, easing: quintOut }}
 >
