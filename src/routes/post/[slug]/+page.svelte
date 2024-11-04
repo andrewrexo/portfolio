@@ -33,7 +33,7 @@
 
 {#if loaded}
   <article
-    class="mx-auto flex min-h-[calc(100vh-65px)] max-w-5xl flex-col justify-start px-4 py-8 sm:px-6 lg:px-8"
+    class="mx-auto flex min-h-[calc(100vh-65px)] max-w-3xl flex-col justify-start px-4 py-8 sm:px-6 lg:px-8"
     transition:fade={{ duration: 500 }}
   >
     <header

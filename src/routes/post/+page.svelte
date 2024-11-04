@@ -18,7 +18,7 @@
 </script>
 
 <div
-  class="mx-auto max-w-5xl px-4 py-8 text-xl sm:px-6 lg:px-8"
+  class="mx-auto max-w-6xl px-4 py-8 text-xl sm:px-6 lg:px-8"
   transition:fade={{ duration: 500 }}
 >
   hey, I think you're looking for /posts/. I'll redirect you there {countdown === 0
