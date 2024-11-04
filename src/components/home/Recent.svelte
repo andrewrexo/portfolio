@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation';
   import type { Post } from '$lib/post';
   import { ArrowDownCircle, ArrowUpRight } from 'lucide-svelte';
-  import { quintOut } from 'svelte/easing';
   import { fade, fly } from 'svelte/transition';
 
   let { posts }: { posts: Post[] } = $props();
@@ -11,7 +10,6 @@
 
   $effect(() => {
     if (mounted) return;
-
     mounted = true;
   });
 </script>
@@ -31,7 +29,7 @@
         <p class="text-sm text-base-content/90">no posts found</p>
       </div>
     {:else}
-      {#each posts as post, idx}
+      {#each posts as post}
         {#if mounted}
           <button
             class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
@@ -48,8 +46,8 @@
                 {/each}
               </span>
             </div>
-            <p class="text-sm text-base-content/90">{post.description}</p>
-            <span class="py-1 text-xs text-base-content/50">
+            <p class="text-left text-sm text-base-content/90">{post.description}</p>
+            <span class="py-1 text-left text-xs text-base-content/50">
               <span>{post.date}</span>
             </span>
             <span class="absolute bottom-2 right-2">

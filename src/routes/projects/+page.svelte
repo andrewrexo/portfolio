@@ -94,66 +94,59 @@
   });
 </script>
 
-{#if mounted}
-  <div
-    onwheel={handleScroll}
-    ontouchstart={handleTouchStart}
-    ontouchmove={handleTouchMove}
-    class="bg-background h-dvh w-full overflow-hidden"
-  >
-    {#if projects.length > 0}
-      <div
-        class="relative h-full w-full"
-        style="transform: translateY(-{currentIndex * 100}vh);
+<div
+  onwheel={handleScroll}
+  ontouchstart={handleTouchStart}
+  ontouchmove={handleTouchMove}
+  class="bg-background h-dvh w-full overflow-hidden"
+>
+  {#if projects.length > 0}
+    <div
+      class="relative h-full w-full"
+      style="transform: translateY(-{currentIndex * 100}vh);
              transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
-      >
-        {#each projects as project, i}
+    >
+      {#each projects as project, i}
+        <div class="absolute left-0 top-0 h-full w-full" style="transform: translateY({i * 100}vh)">
           <div
-            class="absolute left-0 top-0 h-full w-full"
-            style="transform: translateY({i * 100}vh)"
+            class="relative flex h-full w-full items-center justify-center"
+            in:blur={{ duration: 300 }}
           >
-            <div
-              class="relative flex h-full w-full items-center justify-center"
-              in:blur={{ duration: 300 }}
-            >
-              <div class="absolute inset-0">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  class="h-full w-full object-cover opacity-20"
-                />
-                <div
-                  class="from-background/80 to-background/95 absolute inset-0 bg-gradient-to-b"
-                ></div>
-              </div>
+            <div class="absolute inset-0">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="h-full w-full object-cover opacity-20"
+              />
+              <div
+                class="from-background/80 to-background/95 absolute inset-0 bg-gradient-to-b"
+              ></div>
+            </div>
 
-              <div class="relative z-10 mx-auto max-w-3xl px-8 text-center">
-                <h1 class="mb-6 text-4xl font-bold text-primary md:text-6xl">
-                  {project.title}
-                </h1>
-                <p class="text-muted-foreground mb-8 text-lg md:text-xl">
-                  {project.description}
-                </p>
-                <a href={`/projects/${project.slug}`} class="btn btn-primary btn-lg">
-                  View Project
-                </a>
-              </div>
+            <div class="relative z-10 mx-auto max-w-3xl px-8 text-center">
+              <h1 class="mb-6 text-4xl font-bold text-primary md:text-6xl">
+                {project.title}
+              </h1>
+              <p class="text-muted-foreground mb-8 text-lg md:text-xl">
+                {project.description}
+              </p>
+              <a href={`/projects/${project.slug}`} class="btn btn-primary btn-lg">View Project</a>
             </div>
           </div>
-        {/each}
-      </div>
+        </div>
+      {/each}
+    </div>
 
-      <div class="fixed right-8 flex -translate-y-24 flex-col gap-2 md:top-1/2 md:-translate-y-1/2">
-        {#each projects as _, i}
-          <button
-            aria-label={`View project ${i + 1}`}
-            class="h-3 w-3 rounded-full transition-colors"
-            class:bg-primary={i === currentIndex}
-            class:bg-gray-500={i !== currentIndex}
-            onclick={() => (currentIndex = i)}
-          ></button>
-        {/each}
-      </div>
-    {/if}
-  </div>
-{/if}
+    <div class="fixed right-8 flex -translate-y-24 flex-col gap-2 md:top-1/2 md:-translate-y-1/2">
+      {#each projects as _, i}
+        <button
+          aria-label={`View project ${i + 1}`}
+          class="h-3 w-3 rounded-full transition-colors"
+          class:bg-primary={i === currentIndex}
+          class:bg-gray-500={i !== currentIndex}
+          onclick={() => (currentIndex = i)}
+        ></button>
+      {/each}
+    </div>
+  {/if}
+</div>
