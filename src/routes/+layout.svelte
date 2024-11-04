@@ -12,7 +12,7 @@
   let mounted = $state(false);
   let hasViewTransitions = $state(false);
 
-  let showFooter = $derived(mounted && $page.url.pathname !== '/projects');
+  let showFooter = $derived($page.url.pathname !== '/projects');
 
   $effect(() => {
     if (mounted) return;
@@ -41,7 +41,7 @@
 
 <Head />
 
-<main class="flex min-h-dvh flex-col">
+<main class="flex min-h-screen flex-col">
   <DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex min-h-full flex-col">
     {#if mounted}
       <div

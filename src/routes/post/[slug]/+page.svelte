@@ -65,10 +65,7 @@
         {/each}
       </div>
     </header>
-    <div
-      class="prose-md prose prose-invert h-full max-w-none flex-grow prose-img:mx-auto"
-      style={`view-transition-name: content-${title}`}
-    >
+    <div class="prose-md prose prose-invert h-full max-w-none flex-grow prose-img:mx-auto">
       {@render content()}
     </div>
   </article>

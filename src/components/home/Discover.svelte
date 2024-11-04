@@ -27,7 +27,7 @@
     {/if}
     <LetterPullUp words="more from me" delay={50} className="text-left text-3xl" />
   </div>
-  <div class="flex flex-col gap-4">
+  <div class="flex min-h-[200px] flex-col gap-4">
     {#if mounted}
       <Confetti options={{ particleCount: 30 }}>
         <button
