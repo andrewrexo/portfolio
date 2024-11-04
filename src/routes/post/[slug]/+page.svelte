@@ -32,9 +32,12 @@
 </svelte:head>
 
 {#if loaded}
-  <article class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8" transition:fade={{ duration: 500 }}>
+  <article
+    class="mx-auto flex min-h-[calc(100vh-65px)] max-w-5xl flex-col justify-start px-4 py-8 sm:px-6 lg:px-8"
+    transition:fade={{ duration: 500 }}
+  >
     <header
-      class="mb-6 flex h-full flex-col gap-2 md:mb-8"
+      class="mb-6 flex flex-col gap-2 md:mb-8"
       in:fly={{ y: 100, duration: 500 }}
       out:fade={{ duration: 500 }}
     >
@@ -62,7 +65,10 @@
         {/each}
       </div>
     </header>
-    <div class="prose prose-lg max-w-none" transition:fly={{ x: -25, duration: 500 }}>
+    <div
+      class="prose-md prose prose-invert h-full max-w-none flex-grow prose-img:mx-auto"
+      style={`view-transition-name: content-${title}`}
+    >
       {@render content()}
     </div>
   </article>
