@@ -47,7 +47,7 @@ const config = {
         '/projects/',
         '/post',
         '/',
-        '/post/debug-post'
+        '/post/choosing-svelte'
       ]
     }
   }
