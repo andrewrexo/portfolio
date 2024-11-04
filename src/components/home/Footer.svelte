@@ -21,15 +21,31 @@
       and
       <a class="text-base-content/80" href={linkedinUrl}>linkedin</a>
     </span>
-    <div class="arrow-container my-4 flex w-full items-center gap-0">
+    <div class="arrow-container my-4 flex w-full items-center gap-0 overflow-hidden">
       <svg class="h-4 w-[calc(100%-1rem)]" viewBox="0 0 1200 24" preserveAspectRatio="none">
-        <path
-          class=""
-          d="M0 12 Q 50 5, 100 12 T 200 12 T 300 12 T 400 12 T 500 12 T 600 12 T 700 12 T 800 12 T 900 12 T 1000 12 T 1100 12 T 1200 12"
-          fill="none"
+        <defs>
+          <path
+            id="wavePath"
+            d="M0 12 Q 50 5, 100 12 T 200 12 T 300 12 T 400 12 T 500 12 T 600 12 T 700 12 T 800 12 T 900 12 T 1000 12 T 1100 12 T 1200 12"
+          />
+        </defs>
+
+        <use
+          href="#wavePath"
+          class="animate-flow"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
+          fill="none"
+        />
+        <use
+          href="#wavePath"
+          class="animate-flow"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          fill="none"
+          x="1200"
         />
       </svg>
     </div>
@@ -79,5 +95,22 @@
 <style>
   .arrow-container {
     margin-right: -1rem;
+  }
+
+  :global(.animate-flow) {
+    animation: flow 8s linear infinite;
+  }
+
+  @keyframes flow {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-1200px);
+    }
+  }
+
+  .arrow-container svg {
+    overflow: hidden;
   }
 </style>
