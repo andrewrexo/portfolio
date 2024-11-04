@@ -11,11 +11,11 @@
 </script>
 
 <footer
-  class="{position} bottom-0 max-h-16 bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
+  class="{position} bottom-0 max-h-16 w-screen bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
   in:fly={{ duration: 200, y: 25, easing: quintOut }}
   out:fly={{ duration: 200, y: 25, easing: quintOut }}
 >
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 md:gap-8 md:px-12">
+  <div class="mx-auto flex w-full items-center justify-between gap-2 px-4 md:gap-8 md:px-12">
     <span class="text-xs text-base-content/50 sm:text-sm md:min-w-[200px]">
       find me on <a class="text-base-content/80" href={githubUrl}>github</a>
       and
