@@ -12,8 +12,8 @@
 
 <footer
   class="{position} bottom-0 max-h-16 bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
-  in:fly={{ duration: 300, y: 100, easing: quintOut }}
-  out:fly={{ duration: 300, y: 100, easing: quintOut }}
+  in:fly={{ duration: 200, y: 25, easing: quintOut }}
+  out:fly={{ duration: 200, y: 25, easing: quintOut }}
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 md:gap-8 md:px-12">
     <span class="text-xs text-base-content/50 sm:text-sm md:min-w-[200px]">
