@@ -29,7 +29,7 @@
   </div>
   <div class="flex flex-col gap-4">
     {#if mounted}
-      <Confetti options={{ particleCount: 1 }}>
+      <Confetti options={{ particleCount: 30 }}>
         <button
           class="btn btn-info btn-lg btn-block animate-none"
           in:fly={{ y: 50, duration: 750, delay: 300, easing: quintOut }}
