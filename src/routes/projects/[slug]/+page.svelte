@@ -14,7 +14,6 @@
     delay: hasViewTransitions ? 0 : 150,
     start: 0.95
   }}
-  out:fade={{ duration: hasViewTransitions ? 0 : 150, delay: 0 }}
 >
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}

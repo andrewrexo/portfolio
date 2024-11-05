@@ -39,8 +39,8 @@
     <div
       class="mt-1 flex items-center text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl"
       transition:slideSpringFly={{
-        y: -100,
-        delay: delay * 1.5 + 300
+        y: -80,
+        delay: delay
       }}
     >
       {#if children}
@@ -55,7 +55,7 @@
         class={cn('text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl', className)}
         transition:slideSpringFly={{
           y: -100,
-          delay: i * delay * 1.5 + 500
+          delay: i * delay * 1.5 + 150
         }}
       >
         {#if letter === ' '}
