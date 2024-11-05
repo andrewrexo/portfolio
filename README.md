@@ -1,13 +1,8 @@
----
-title: Andrew R's Portfolio
-description: A showcase of my projects built with Svelte 5 and Phaser 3, highlighting my skills in web development and game design.
-date: '2024-11-04'
-published: true
----
-
 # My Portfolio
 
 Welcome to my portfolio! This project showcases the various web apps, games, and other projects I've developed and worked on. I've built a lot of stuff over the years, and it's about time that I collect it all in one place.
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/afd185be-fe8c-4cb8-be9e-04d412abb4f0">
 
 ## Projects and Blog Posts
 
