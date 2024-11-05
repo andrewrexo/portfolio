@@ -1,11 +1,11 @@
 ---
 title: Milkshake
 description: An embeddable crypto-to-crypto cross-chain swap widget built with React. Allows for custom themes, configurable networks / assets, and supports multi-network wallet connections.
-image: /milkshake.png
+image: /milkshake.webp
 published: true
 ---
 
-<img width="400px" class="rounded-lg" height="200px" alt="image" src="/milkshake.png">
+<img width="400px" class="rounded-lg" height="200px" alt="image" src="/milkshake.webp">
 
 ## Features
 
