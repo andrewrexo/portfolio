@@ -5,7 +5,7 @@ image: /mappingtool.png
 published: true
 ---
 
-<img style="view-transition-name: image-opentxpacker" src="/mappingtool.png" width="500px" />
+<img style="view-transition-name: image-mappingtool" src="/mappingtool.png" width="500px" />
 
 ## Features
 
