@@ -2,7 +2,8 @@
   import { goto } from '$app/navigation';
   import type { Post } from '$lib/post';
   import { ArrowDownCircle, ArrowUpRight } from 'lucide-svelte';
-  import { fade, fly } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
+  import { fade, fly, scale } from 'svelte/transition';
 
   let { posts }: { posts: Post[] } = $props();
 
@@ -16,18 +17,30 @@
 
 <section class="grid grid-cols-1 gap-4">
   <h2 class="flex items-center gap-4 text-3xl font-bold">
-    {#if mounted}
-      <span class="flex gap-4" transition:fade={{ duration: 300, delay: 200 }}>
-        <ArrowDownCircle class="mt-1 h-8 w-8 text-primary" />
-        recent posts
-      </span>
-    {/if}
+    <span class="flex gap-4">
+      <ArrowDownCircle class="mt-1 h-8 w-8 text-primary" />
+      recent posts
+    </span>
   </h2>
   <div class="grid grid-cols-1 gap-4">
     {#if posts.length === 0}
-      <div class="card rounded-lg shadow-md">
-        <p class="text-sm text-base-content/90">no posts found</p>
-      </div>
+      {#each Array(1) as _}
+        <div
+          class="card animate-pulse rounded-lg border border-base-100 bg-base-200 p-2 opacity-5 duration-100"
+          transition:fade={{ duration: 300 }}
+        >
+          <div class="flex justify-between gap-4">
+            <div class="h-6 w-48 rounded bg-white/40"></div>
+            <div class="flex gap-2">
+              <div class="h-5 w-16 rounded bg-white/40"></div>
+              <div class="h-5 w-16 rounded bg-white/40"></div>
+            </div>
+          </div>
+          <div class="mt-2 h-4 w-full rounded bg-white/40"></div>
+          <div class="mt-1 h-4 w-3/4 rounded bg-white/40"></div>
+          <div class="mt-2 h-3 w-24 rounded bg-white/40"></div>
+        </div>
+      {/each}
     {:else}
       {#each posts as post}
         {#if mounted}
