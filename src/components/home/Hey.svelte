@@ -25,8 +25,8 @@
   </a>
   <div class="pt-4">
     <p class="max-w-prose text-lg">
-      from pixels to performance, i strive make the web more wonderful. looking to build something
-      amazing? drop me a line at
+      from pixels to performance, i strive to make the web more wonderful. looking for a
+      collaborator on your next project? drop me a line at
       <a
         href="mailto:andrew@rubes.dev"
         class="inline-block text-primary underline decoration-wavy decoration-1 underline-offset-4"
