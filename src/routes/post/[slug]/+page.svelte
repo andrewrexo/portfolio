@@ -36,8 +36,8 @@
       </button>
       <h1 class="text-4xl font-bold capitalize">{title}</h1>
     </div>
-    <p class="text-sm text-secondary">
-      Published on {new Date(date).toLocaleDateString('en-US', {
+    <p class="text-sm">
+      thoughts dumped from brain on {new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -46,7 +46,7 @@
     <div class="flex flex-wrap gap-2 pt-2" in:fly={{ x: 25, duration: 500 }}>
       {#each categories as category}
         <span
-          class="badge badge-primary badge-sm cursor-pointer transition-all duration-300 hover:badge-info hover:rotate-1 hover:scale-105"
+          class="badge badge-sm cursor-pointer border-none bg-primary/40 transition-all duration-300 hover:badge-info hover:rotate-1 hover:scale-105"
         >
           #{category}
         </span>

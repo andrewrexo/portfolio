@@ -63,7 +63,7 @@
               <span>{post.date}</span>
             </span>
             <span class="absolute bottom-2 right-2">
-              <ArrowUpRight class="h-8 w-8 text-base-content" />
+              <ArrowUpRight class="h-4 w-4 text-base-content md:h-8 md:w-8" />
             </span>
           </button>
         {/if}
