@@ -2,6 +2,8 @@
 title: Isometric Map Editor
 description: A powerful game world / map editor built with Svelte 5, Phaser, and Typescrpt. This tool focuses specifically on designing custom isometric maps for game development or other creative art projects.
 image: /mappingtool.webp
+github: https://github.com/andrewrexo/mapping-tool
+demo: https://mapper-n6u.pages.dev/
 published: true
 ---
 

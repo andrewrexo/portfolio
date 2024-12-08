@@ -16,7 +16,7 @@
     <span in:fly={{ y: -100, duration: 300, easing: quintOut }}>
       <PersonStanding class="-ml-1 mr-1 h-10 w-10 text-primary" />
     </span>
-    <LetterPullUp words="more from me" delay={40} className="text-left text-3xl" />
+    <LetterPullUp words="more from me" delay={5} className="text-left text-3xl" />
   </div>
   <div class="flex flex-col gap-4">
     <Confetti options={{ particleCount: 30 }}>

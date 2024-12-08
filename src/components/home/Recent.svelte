@@ -46,7 +46,7 @@
           <button
             class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md outline-none brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
             onclick={() => goto(`/post/${post.slug}`)}
-            transition:scale={{ start: 0.5, duration: 500 }}
+            transition:scale={{ start: 0.9, duration: 500 }}
           >
             <div class="flex justify-between gap-4">
               <h3 class="text-lg font-semibold">{post.title}</h3>

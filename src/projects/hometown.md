@@ -2,6 +2,8 @@
 title: Hometown
 description: A web-based multiplayer online game built with Phaser, Svelte, Tauri, and Colyseus.js. It features an isometric game world where players can interact, chat, fight, and explore together.
 image: /hometown.webp
+github: https://github.com/andrewrexo/hometown
+demo: https://master.homeground.pages.dev/
 published: true
 ---
 

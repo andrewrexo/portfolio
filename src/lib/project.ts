@@ -1,6 +1,8 @@
 export type Project = {
   title: string;
   description: string;
+  github?: string | null;
+  demo?: string | null;
   image?: string | null;
   slug: string;
   published?: boolean;

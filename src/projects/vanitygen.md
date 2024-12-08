@@ -2,6 +2,7 @@
 title: Tezos VanityGen
 description: Bespoke vanity address generator for tz1 addresses used on the Tezos Blockchain. Main uses are to hunt for specific private key pairs that match public keys containing specific strings or names.
 image: /tezos-vanity.webp
+github: https://github.com/Qwiddle/tezos-vanity-gen
 published: true
 ---
 
