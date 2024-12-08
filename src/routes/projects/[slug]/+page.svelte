@@ -2,13 +2,27 @@
   import BackArrow from '$components/icons/BackArrow.svelte';
   import Github from '$components/icons/Github.svelte';
   import { ExternalLink } from 'lucide-svelte';
-  import { scale } from 'svelte/transition';
 
   let { data } = $props();
   const { title, description, slug, content, github, demo } = data;
 
   const hasViewTransitions = 'startViewTransition' in document;
 </script>
+
+<svelte:head>
+  <meta name="description" content={description} />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={`https://rubes.dev/projects/${slug}`} />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  <link rel="canonical" href={`https://rubes.dev/projects/${slug}`} />
+</svelte:head>
 
 <article class="mx-auto w-full max-w-5xl">
   <div

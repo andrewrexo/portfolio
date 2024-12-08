@@ -29,7 +29,7 @@
 
   <div
     in:fade={{ duration: 200 }}
-    class="grid grid-cols-1 gap-8 overflow-hidden pt-8 md:grid-cols-2 lg:grid-cols-3"
+    class="grid grid-cols-1 gap-8 overflow-hidden px-4 pt-6 md:grid-cols-2 lg:grid-cols-3"
   >
     {#each projects as project}
       <a
