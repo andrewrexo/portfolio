@@ -1,5 +1,6 @@
 export type Project = {
   title: string;
+  priority?: number;
   description: string;
   github?: string | null;
   demo?: string | null;
@@ -11,7 +12,7 @@ export type Project = {
 export const loadProjectsFromDisk = async () => {
   const projectFiles = import.meta.glob('/src/projects/*.md');
 
-  return Promise.all(
+  const projects = await Promise.all(
     Object.entries(projectFiles).map(async ([path, loader]) => {
       const project = await loader();
       const slug = path.split('/').pop()?.replace('.md', '');
@@ -27,6 +28,17 @@ export const loadProjectsFromDisk = async () => {
       }
     })
   );
+
+  return projects
+    .filter((project): project is NonNullable<typeof project> => project !== undefined)
+    .sort((a, b) => {
+      if (a.priority !== undefined && b.priority !== undefined) {
+        return a.priority - b.priority;
+      }
+      if (a.priority !== undefined) return -1;
+      if (b.priority !== undefined) return 1;
+      return 0;
+    });
 };
 
 export const loadProjectFromDisk = async (slug: string) => {

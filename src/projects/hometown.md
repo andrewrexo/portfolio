@@ -5,6 +5,7 @@ image: /hometown.webp
 github: https://github.com/andrewrexo/hometown
 demo: https://master.homeground.pages.dev/
 published: true
+priority: 3
 ---
 
 <img style="view-transition-name: image-hometown" src="/hometown.webp" width="700" />
