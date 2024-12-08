@@ -110,16 +110,22 @@
       isActive = false;
     };
 
-    element.addEventListener('pointermove', handleMove);
-    element.addEventListener('pointerdown', handleStart);
-    element.addEventListener('pointerup', handleEnd);
+    element.addEventListener('mousemove', handleMove);
+    element.addEventListener('mousedown', handleStart);
+    element.addEventListener('mouseup', handleEnd);
+    element.addEventListener('touchmove', handleMove);
+    element.addEventListener('touchstart', handleStart);
+    element.addEventListener('touchend', handleEnd);
 
     animate();
 
     return () => {
-      element.removeEventListener('pointermove', handleMove);
-      element.removeEventListener('pointerdown', handleStart);
-      element.removeEventListener('pointerup', handleEnd);
+      element.removeEventListener('mousemove', handleMove);
+      element.removeEventListener('mousedown', handleStart);
+      element.removeEventListener('mouseup', handleEnd);
+      element.removeEventListener('touchmove', handleMove);
+      element.removeEventListener('touchstart', handleStart);
+      element.removeEventListener('touchend', handleEnd);
       canvas.remove();
     };
   }
