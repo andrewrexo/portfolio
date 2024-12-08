@@ -10,21 +10,14 @@
   const hasViewTransitions = 'startViewTransition' in document;
 </script>
 
-<article
-  class="mx-auto w-full max-w-5xl"
-  in:scale={{
-    duration: hasViewTransitions ? 0 : 300,
-    delay: hasViewTransitions ? 0 : 150,
-    start: 0.95
-  }}
->
+<article class="mx-auto w-full max-w-5xl">
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}
     class="mt-8 max-w-none px-4 pb-8"
   >
     <section class="flex items-center gap-4">
-      <div class="ml-2 flex w-full flex-col justify-between gap-6 md:ml-0 md:flex-row">
-        <h1 class="flex gap-8 text-3xl font-extrabold lowercase">
+      <div class="flex w-full flex-col justify-between gap-6 md:flex-row">
+        <h1 class="flex gap-4 text-3xl font-extrabold lowercase">
           <button
             onclick={() => history.back()}
             class="transition duration-300 hover:rotate-6 hover:text-primary"

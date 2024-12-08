@@ -16,7 +16,7 @@
   }
 </script>
 
-<div class="flex flex-col px-4 py-8 md:px-8">
+<div class="mx-auto flex max-w-5xl flex-col px-2 py-8">
   <section class="ml-2 flex items-center gap-4 md:ml-0">
     <button
       onclick={() => history.back()}
