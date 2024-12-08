@@ -1,26 +1,35 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import BackArrow from '$components/icons/BackArrow.svelte';
-  import { fade, fly, scale } from 'svelte/transition';
+  import { fade, scale } from 'svelte/transition';
 
   const projects = $page.data.projects;
+
+  function onImageLoad(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.classList.remove('opacity-0');
+    const skeleton = img.previousElementSibling;
+    if (skeleton) {
+      console.log(skeleton);
+      skeleton.remove();
+    }
+  }
 </script>
 
-<div class="flex flex-col px-4 md:px-8">
-  <section class="flex items-center gap-4 py-8">
+<div class="flex flex-col px-4 py-8 md:px-8">
+  <section class="flex items-center gap-4">
     <button
       onclick={() => history.back()}
       class="transition duration-300 hover:rotate-6 hover:text-primary"
-      in:fly={{ x: 20, duration: 300 }}
     >
       <BackArrow class="mt-2 size-7" />
     </button>
-    <h1 class="text-3xl font-extrabold">work / projects</h1>
+    <h1 class="text-3xl font-extrabold">work & projects</h1>
   </section>
 
   <div
     in:fade={{ duration: 200 }}
-    class="grid grid-cols-1 gap-8 overflow-hidden md:grid-cols-2 lg:grid-cols-3"
+    class="grid grid-cols-1 gap-8 overflow-hidden pt-8 md:grid-cols-2 lg:grid-cols-3"
   >
     {#each projects as project}
       <a
@@ -28,11 +37,15 @@
         class="group relative rounded-xl bg-base-200 transition-all hover:bg-base-100 hover:shadow-lg"
         in:scale={{ duration: 300, delay: 150, start: 0.95 }}
       >
-        <div class="aspect-video w-full">
+        <div class="relative aspect-video w-full">
+          <div
+            class="absolute inset-0 animate-pulse rounded-t-xl bg-gradient-to-r from-base-300 to-base-200 transition-opacity duration-300"
+          ></div>
           <img
             src={project.image}
             alt={project.title}
-            class="h-full w-full rounded-t-xl object-cover transition-transform duration-300 group-hover:scale-95"
+            class="h-full w-full rounded-t-xl object-cover opacity-0 transition-all duration-300 group-hover:scale-95"
+            onload={onImageLoad}
           />
         </div>
         <div class="mb-4 px-4 py-2">

@@ -1,5 +1,13 @@
 <script>
   let { children } = $props();
+
+  let mounted = $state(false);
+
+  $effect(() => {
+    mounted = true;
+  });
 </script>
 
-{@render children()}
+{#if mounted}
+  {@render children()}
+{/if}
