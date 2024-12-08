@@ -11,7 +11,7 @@
   <meta property="og:title" content={$page.data.title} />
   <meta property="og:description" content={$page.data.description} />
   <meta property="og:image" content="https://rubes.dev/opengraph-image.jpg" />
-  <link rel="icon" href={$page.data.icon.href} />
+  <link rel="icon" href="https://rubes.dev/favicon-32x32.png" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="twitter:domain" content="rubes.dev" />
