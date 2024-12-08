@@ -25,6 +25,8 @@
   <header class="mb-6 flex flex-col gap-2 md:mb-8" in:fly={{ y: 100, duration: 500 }}>
     <div class="items-center gap-2">
       <button
+        aria-label="Back to home"
+        id="back-to-home"
         onclick={() => {
           goto('/');
         }}

@@ -33,6 +33,8 @@
       <div class="flex w-full flex-col justify-between gap-6 md:flex-row">
         <h1 class="flex gap-4 text-3xl font-extrabold lowercase">
           <button
+            aria-label="Back to home"
+            id="back-to-home"
             onclick={() => history.back()}
             class="transition duration-300 hover:rotate-6 hover:text-primary"
           >

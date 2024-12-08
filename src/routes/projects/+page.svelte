@@ -19,6 +19,8 @@
 <div class="mx-auto flex max-w-5xl flex-col px-2 py-8">
   <section class="ml-2 flex items-center gap-4 md:ml-0">
     <button
+      aria-label="Back to home"
+      id="back-to-home"
       onclick={() => history.back()}
       class="transition duration-300 hover:rotate-6 hover:text-primary"
     >
