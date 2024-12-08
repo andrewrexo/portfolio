@@ -56,8 +56,8 @@
 
 <Head />
 
-<main class="flex min-h-dvh w-screen flex-col items-center justify-center overflow-hidden">
-  <DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex min-h-full flex-col">
+<main class="flex min-h-dvh flex-col items-center justify-center overflow-hidden">
+  <DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex flex-col">
     <div
       class="container mx-auto min-h-full max-w-6xl {showFooter ? 'pb-14' : ''}"
       in:fade={{ duration: 200, delay: 150 }}
