@@ -4,17 +4,11 @@
   import Recent from '$components/home/Recent.svelte';
   import type { Post } from '$lib/post';
 
-  let mounted = $state(false);
-
   type PageData = {
     posts: Post[];
   };
 
   let { data }: { data: PageData } = $props();
-
-  $effect(() => {
-    mounted = true;
-  });
 </script>
 
 <div class="flex min-h-[calc(100svh-65px)] flex-col gap-y-10 px-4 pb-8 md:gap-y-14 md:px-12">

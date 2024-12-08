@@ -1,154 +1,56 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { blur } from 'svelte/transition';
-
-  let currentIndex = $state(0);
-  let isTransitioning = $state(false);
-  let mounted = $state(false);
-
-  let lastScrollTime = $state(0);
-  let scrollAccumulator = $state(0);
-
-  let touchStartY = $state(0);
+  import BackArrow from '$components/icons/BackArrow.svelte';
+  import { fade, fly, scale } from 'svelte/transition';
 
   const projects = $page.data.projects;
-  const SCROLL_THRESHOLD = 100; // Amount of scroll needed to trigger a change
-  const SCROLL_COOLDOWN = 750;
-
-  function handleScroll(e: WheelEvent) {
-    if (isTransitioning) return;
-
-    const now = Date.now();
-    if (now - lastScrollTime < SCROLL_COOLDOWN) {
-      // Still in cooldown, accumulate scroll
-      scrollAccumulator += e.deltaY;
-      return;
-    }
-
-    // Add current scroll to accumulator
-    scrollAccumulator += e.deltaY;
-
-    // Check if we've scrolled enough to trigger a change
-    if (Math.abs(scrollAccumulator) >= SCROLL_THRESHOLD) {
-      const direction = scrollAccumulator > 0 ? 1 : -1;
-      const newIndex = currentIndex + direction;
-
-      if (newIndex >= 0 && newIndex < projects.length) {
-        isTransitioning = true;
-        lastScrollTime = now;
-        currentIndex = newIndex;
-
-        setTimeout(() => {
-          isTransitioning = false;
-        }, 500);
-      }
-
-      // Reset accumulator after handling the scroll
-      scrollAccumulator = 0;
-    }
-  }
-
-  function handleTouchStart(e: TouchEvent) {
-    if (isTransitioning) return;
-    touchStartY = e.touches[0].clientY;
-  }
-
-  function handleTouchMove(e: TouchEvent) {
-    if (isTransitioning) return;
-
-    const touchEndY = e.touches[0].clientY;
-    const deltaY = touchStartY - touchEndY;
-
-    const now = Date.now();
-    if (now - lastScrollTime < SCROLL_COOLDOWN) {
-      scrollAccumulator += deltaY;
-      return;
-    }
-
-    scrollAccumulator += deltaY;
-
-    if (Math.abs(scrollAccumulator) >= SCROLL_THRESHOLD) {
-      const direction = scrollAccumulator > 0 ? 1 : -1;
-      const newIndex = currentIndex + direction;
-
-      if (newIndex >= 0 && newIndex < projects.length) {
-        isTransitioning = true;
-        lastScrollTime = now;
-        currentIndex = newIndex;
-
-        setTimeout(() => {
-          isTransitioning = false;
-        }, 500);
-      }
-
-      scrollAccumulator = 0;
-      touchStartY = touchEndY;
-    }
-  }
-
-  $effect(() => {
-    if (mounted) return;
-
-    mounted = true;
-  });
 </script>
 
-<div
-  class="bg-background h-dvh w-full overflow-hidden overscroll-none"
-  onwheel={handleScroll}
-  ontouchstart={handleTouchStart}
-  ontouchmove={handleTouchMove}
->
-  {#if projects.length > 0}
-    <div
-      class="relative h-full w-full"
-      style="transform: translateY(-{currentIndex * 100}vh);
-             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)"
+<div class="flex flex-col px-4 md:px-8">
+  <section class="flex items-center gap-4 py-8">
+    <button
+      onclick={() => history.back()}
+      class="transition duration-300 hover:rotate-6 hover:text-primary"
+      in:fly={{ x: 20, duration: 300 }}
     >
-      {#each projects as project, i}
-        <div
-          class="absolute left-0 top-0 h-full w-full overscroll-none"
-          style="transform: translateY({i * 100}vh)"
-        >
-          <div
-            class="relative flex h-full w-full items-center justify-center"
-            in:blur={{ duration: 300 }}
-          >
-            <div class="absolute inset-0">
-              <img
-                src={project.image}
-                alt={project.title}
-                class="h-full w-full object-cover opacity-20"
-              />
-              <div
-                class="from-background/80 to-background/95 absolute inset-0 bg-gradient-to-b"
-              ></div>
-            </div>
+      <BackArrow class="mt-2 size-7" />
+    </button>
+    <h1 class="text-3xl font-extrabold">work / projects</h1>
+  </section>
 
-            <div class="relative z-10 mx-auto max-w-3xl px-8 text-center">
-              <h1 class="mb-6 text-4xl font-bold text-primary md:text-6xl">
-                {project.title}
-              </h1>
-              <p class="text-muted-foreground mb-8 text-lg md:text-xl">
-                {project.description}
-              </p>
-              <a href={`/projects/${project.slug}`} class="btn btn-primary btn-lg">View Project</a>
-            </div>
-          </div>
+  <div
+    in:fade={{ duration: 200 }}
+    class="grid grid-cols-1 gap-8 overflow-hidden md:grid-cols-2 lg:grid-cols-3"
+  >
+    {#each projects as project}
+      <a
+        href={`/projects/${project.slug}`}
+        class="group relative rounded-xl bg-base-200 transition-all hover:bg-base-100 hover:shadow-lg"
+        in:scale={{ duration: 300, delay: 150, start: 0.95 }}
+      >
+        <div class="aspect-video w-full">
+          <img
+            src={project.image}
+            alt={project.title}
+            class="h-full w-full rounded-t-xl object-cover transition-transform duration-300 group-hover:scale-95"
+          />
         </div>
-      {/each}
-    </div>
-
-    <div class="fixed right-8 flex -translate-y-24 flex-col gap-2 md:top-1/2 md:-translate-y-1/2">
-      {#each projects as _, i}
-        <button
-          aria-label={`View project ${i + 1}`}
-          class="h-3 w-3 rounded-full transition-colors"
-          class:bg-primary={i === currentIndex}
-          class:bg-gray-500={i !== currentIndex}
-          onclick={() => (currentIndex = i)}
-        ></button>
-      {/each}
-    </div>
-  {/if}
+        <div class="mb-4 px-4 py-2">
+          <h2 class="mb-2 text-2xl font-bold lowercase text-primary group-hover:text-primary/80">
+            {project.title}
+          </h2>
+          <p class="text-muted-foreground line-clamp-2 lowercase">{project.description}</p>
+        </div>
+        <div
+          class="absolute inset-0 flex items-center justify-center
+                 rounded-xl bg-black/30 opacity-0
+                 transition-opacity duration-300 group-hover:opacity-100"
+        >
+          <span class="rounded-full bg-primary px-6 py-2 font-semibold text-white">
+            View Project
+          </span>
+        </div>
+      </a>
+    {/each}
+  </div>
 </div>
