@@ -21,7 +21,7 @@
   <div class="flex flex-col gap-4">
     <Confetti options={{ particleCount: 30 }}>
       <button
-        class="btn btn-info btn-lg btn-block"
+        class="btn-override btn btn-outline btn-primary btn-lg btn-block"
         in:fly={{ y: 150, duration: 750, easing: quintOut }}
       >
         show me something cool
@@ -44,5 +44,10 @@
 
   button:hover {
     transform: scale(0.98);
+  }
+
+  .btn-override:hover {
+    background-color: oklch(var(--pc) / 0.3);
+    color: oklch(var(--p));
   }
 </style>
