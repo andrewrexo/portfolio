@@ -23,13 +23,13 @@
     class="mt-8 max-w-none px-4 pb-8"
   >
     <section class="flex items-center gap-4">
-      <div class="flex w-full flex-col justify-between gap-4 md:flex-row">
-        <h1 class="flex gap-4 text-3xl font-extrabold lowercase">
+      <div class="ml-2 flex w-full flex-col justify-between gap-6 md:ml-0 md:flex-row">
+        <h1 class="flex gap-8 text-3xl font-extrabold lowercase">
           <button
             onclick={() => history.back()}
             class="transition duration-300 hover:rotate-6 hover:text-primary"
           >
-            <BackArrow class="-mb-2 size-7" />
+            <BackArrow class="-mb-1 size-7" />
           </button>
           {title}
         </h1>

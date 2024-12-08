@@ -17,12 +17,12 @@
 </script>
 
 <div class="flex flex-col px-4 py-8 md:px-8">
-  <section class="flex items-center gap-4">
+  <section class="ml-2 flex items-center gap-4 md:ml-0">
     <button
       onclick={() => history.back()}
       class="transition duration-300 hover:rotate-6 hover:text-primary"
     >
-      <BackArrow class="mt-2 size-7" />
+      <BackArrow class="mt-1 size-7" />
     </button>
     <h1 class="text-3xl font-extrabold">work & projects</h1>
   </section>
