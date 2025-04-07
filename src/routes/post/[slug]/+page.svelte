@@ -10,6 +10,10 @@
     content,
     meta: { title, date, categories }
   } = data;
+
+  $effect(() => {
+    loaded = true;
+  });
 </script>
 
 <svelte:head>
@@ -22,7 +26,7 @@
   class="mx-auto flex min-h-[calc(100vh-65px)] max-w-3xl flex-col justify-start px-4 py-8 sm:px-6 lg:px-8"
   in:fade={{ duration: 200 }}
 >
-  <header class="mb-6 flex flex-col gap-2 md:mb-8" in:fly={{ y: 100, duration: 500 }}>
+  <header class="mb-6 flex flex-col gap-2" in:fly={{ y: 100, duration: 500 }}>
     <div class="">
       <button
         aria-label="Back to home"
@@ -36,7 +40,9 @@
           class="right-4 -mb-0.5 h-8 w-8 cursor-pointer transition-all duration-300 hover:text-primary md:block"
         />
       </button>
-      <h1 class="text-4xl font-bold capitalize md:-ml-1">{title}</h1>
+      {#if loaded}
+        <h1 class="text-4xl font-bold capitalize md:-ml-1">{title}</h1>
+      {/if}
     </div>
     <p class="text-sm">
       written on {new Date(date).toLocaleDateString('en-US', {
@@ -45,17 +51,8 @@
         day: 'numeric'
       })}
     </p>
-    <div class="flex flex-wrap gap-2 pt-2" in:fly={{ x: 25, duration: 500 }}>
-      {#each categories as category}
-        <span
-          class="badge badge-sm cursor-pointer border-none bg-primary/40 transition-all duration-300 hover:badge-info hover:rotate-1 hover:scale-105"
-        >
-          #{category}
-        </span>
-      {/each}
-    </div>
   </header>
-  <div class="prose-md prose prose-invert h-full max-w-none flex-grow prose-img:mx-auto">
+  <div class="prose prose-lg h-full max-w-none prose-img:mx-auto prose-hr:my-8">
     {@render content()}
   </div>
 </article>
