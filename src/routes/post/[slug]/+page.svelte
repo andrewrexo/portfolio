@@ -8,12 +8,16 @@
     content,
     meta: { title, date, description, image }
   } = data;
+
+  const toTitleCase = (str: string) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
 </script>
 
 <svelte:head>
-  <title>{title}</title>
+  <title>{toTitleCase(title)}</title>
   <meta property="og:type" content="article" />
-  <meta property="og:title" content={title} />
+  <meta property="og:title" content={toTitleCase(title)} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={image} />
 </svelte:head>
