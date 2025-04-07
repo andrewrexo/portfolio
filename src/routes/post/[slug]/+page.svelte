@@ -8,7 +8,7 @@
   let { data } = $props();
   let {
     content,
-    meta: { title, date, categories }
+    meta: { title, date, description, image }
   } = data;
 
   $effect(() => {
@@ -20,6 +20,8 @@
   <title>{title}</title>
   <meta property="og:type" content="article" />
   <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
 </svelte:head>
 
 <article
@@ -53,6 +55,9 @@
     </p>
   </header>
   <div class="prose prose-lg h-full max-w-none prose-img:mx-auto prose-hr:my-8">
+    {#if image}
+      <img src={image} alt={title} />
+    {/if}
     {@render content()}
   </div>
 </article>

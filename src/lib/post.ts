@@ -19,6 +19,7 @@ export type Post = {
   date: string;
   categories: Category[];
   published: boolean;
+  image: string;
 };
 
 export const loadPostsFromDisk = async () => {
