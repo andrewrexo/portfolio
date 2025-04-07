@@ -40,14 +40,17 @@ const config = {
     prerender: {
       crawl: true,
       entries: [
+        '/',
+        '/projects',
+        '/post',
+        '/post/choosing-svelte',
         '/projects/opentxpacker',
         '/projects/milkshake',
         '/projects/mappingtool',
-        '/projects/opentxpacker',
-        '/projects/',
-        '/post',
-        '/',
-        '/post/choosing-svelte'
+        '/projects/vanitygen',
+        '/projects/hometown',
+        '/projects/eoproxyts',
+        '/projects/swappage'
       ]
     }
   }

@@ -3,6 +3,8 @@ import type { PageLoad } from './$types';
 import type { Project } from '$lib/project';
 import type { Snippet } from 'svelte';
 
+export const prerender = true;
+
 export const load = (async ({ params }) => {
   try {
     if (!/^[a-z0-9-]+$/i.test(params.slug)) {

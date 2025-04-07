@@ -2,6 +2,8 @@ import type { Post } from '$lib/post.js';
 import { error } from '@sveltejs/kit';
 import type { Snippet } from 'svelte';
 
+export const prerender = true;
+
 export async function load({ params }) {
   try {
     // Validate slug to prevent directory traversal
