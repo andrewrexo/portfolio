@@ -10,7 +10,6 @@
     img.classList.remove('opacity-0');
     const skeleton = img.previousElementSibling;
     if (skeleton) {
-      console.log(skeleton);
       skeleton.remove();
     }
   }

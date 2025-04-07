@@ -23,23 +23,23 @@
   in:fade={{ duration: 200 }}
 >
   <header class="mb-6 flex flex-col gap-2 md:mb-8" in:fly={{ y: 100, duration: 500 }}>
-    <div class="items-center gap-2">
+    <div class="">
       <button
         aria-label="Back to home"
         id="back-to-home"
         onclick={() => {
           goto('/');
         }}
-        class="-mb-[36px] -ml-[60px] hidden duration-200 hover:rotate-6 md:block"
+        class="mb-4 mr-auto duration-200 hover:rotate-6 md:-mb-[36px] md:-ml-[60px] md:block"
       >
         <BackArrow
-          class="right-4 -mb-0.5 hidden h-8 w-8 cursor-pointer transition-all duration-300 hover:text-primary md:block"
+          class="right-4 -mb-0.5 h-8 w-8 cursor-pointer transition-all duration-300 hover:text-primary md:block"
         />
       </button>
-      <h1 class="text-4xl font-bold capitalize">{title}</h1>
+      <h1 class="text-4xl font-bold capitalize md:-ml-1">{title}</h1>
     </div>
     <p class="text-sm">
-      thoughts dumped from brain on {new Date(date).toLocaleDateString('en-US', {
+      written on {new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
