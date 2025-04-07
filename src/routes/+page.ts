@@ -1,7 +1,7 @@
 import { loadPostsFromDisk } from '$lib/post';
 
 export async function load() {
-  return {
-    posts: loadPostsFromDisk()
-  };
+  // Only load metadata by default
+  const posts = await loadPostsFromDisk(false);
+  return { posts };
 }
