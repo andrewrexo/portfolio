@@ -49,7 +49,7 @@
             transition:scale={{ start: 0.9, duration: 500 }}
           >
             <div class="flex justify-between gap-4">
-              <h3 class="text-lg font-semibold">{post.title}</h3>
+              <h3 class="text-left text-lg font-semibold">{post.title}</h3>
               <span class="space-x-1">
                 {#each post.categories as category}
                   <span class="badge badge-sm border-none bg-primary/40 py-2">
@@ -58,8 +58,8 @@
                 {/each}
               </span>
             </div>
-            <p class="text-left text-sm text-base-content/90">{post.description}</p>
-            <span class="py-1 text-left text-xs text-base-content/50">
+            <p class="py-1 text-left text-sm text-base-content/90">{post.description}</p>
+            <span class="py-2 text-left text-xs text-base-content/50">
               <span>{post.date}</span>
             </span>
             <span class="absolute bottom-2 right-2">

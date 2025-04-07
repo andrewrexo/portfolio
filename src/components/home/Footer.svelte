@@ -22,7 +22,11 @@
       <a class="text-base-content/80" href={linkedinUrl}>linkedin</a>
     </span>
     <div class="arrow-container my-4 flex w-full items-center gap-0 overflow-hidden">
-      <svg class="h-4 w-[calc(100%-1rem)]" viewBox="0 0 1200 24" preserveAspectRatio="none">
+      <svg
+        class="h-4 w-[calc(100%-1rem)]"
+        viewBox="0 0 1200 24"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
           <path
             id="wavePath"
