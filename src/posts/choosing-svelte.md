@@ -6,6 +6,7 @@ categories:
   - sveltekit
   - svelte
 published: true
+image: /svelte-is-the-best-framework.avif
 ---
 
 I’ve been around the frontend block more times than I’d like to admit. React, Vue, Solid, even the occasional fling with Alpine or Lit. But no matter what I try, I keep coming back to Svelte—and with Svelte 5 on the scene, that return feels less like a choice and more like fate.
