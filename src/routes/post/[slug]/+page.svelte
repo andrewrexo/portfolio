@@ -6,21 +6,9 @@
   let { data } = $props();
   let {
     content,
-    meta: { title, date, description, image }
+    meta: { title, date, image }
   } = data;
-
-  const toTitleCase = (str: string) => {
-    return str.replace(/\b\w/g, (char) => char.toUpperCase());
-  };
 </script>
-
-<svelte:head>
-  <title>{toTitleCase(title)}</title>
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content={toTitleCase(title)} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image" content={image} />
-</svelte:head>
 
 <article
   class="mx-auto flex min-h-[calc(100vh-65px)] max-w-3xl flex-col justify-start px-4 py-8 sm:px-6 lg:px-8"

@@ -23,7 +23,12 @@ export async function load({ params }) {
 
     return {
       content,
-      meta: module.metadata
+      meta: {
+        title: module.metadata.title,
+        description: module.metadata.description || 'Read this post on rubes.dev',
+        image: module.metadata.image || 'https://rubes.dev/opengraph-image.jpg',
+        date: module.metadata.date
+      }
     };
   } catch (err) {
     console.error('Error loading project:', err);

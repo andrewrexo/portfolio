@@ -14,6 +14,10 @@
   let isProject = $derived($page.url.pathname === '/projects');
   let showFooter = $derived(!isProject);
 
+  const toTitleCase = (str: string) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   $effect(() => {
     if (mounted) return;
 
@@ -54,7 +58,11 @@
   });
 </script>
 
-<Head />
+<Head
+  title={toTitleCase($page.data.meta?.title || $page.data.title)}
+  description={$page.data.meta?.description || $page.data.description}
+  image={$page.data.meta?.image || 'https://rubes.dev/opengraph-image.jpg'}
+/>
 
 <main class="flex min-h-dvh flex-col items-center justify-center overflow-hidden">
   <DotPattern fillColor="rgb(163 163 163 / 0.2)" class="flex flex-col">
