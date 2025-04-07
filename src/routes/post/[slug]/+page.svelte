@@ -3,17 +3,11 @@
   import { goto } from '$app/navigation';
   import BackArrow from '$components/icons/BackArrow.svelte';
 
-  let loaded = $state(false);
-
   let { data } = $props();
   let {
     content,
     meta: { title, date, description, image }
   } = data;
-
-  $effect(() => {
-    loaded = true;
-  });
 </script>
 
 <svelte:head>
@@ -42,9 +36,7 @@
           class="right-4 -mb-0.5 h-8 w-8 cursor-pointer transition-all duration-300 hover:text-primary md:block"
         />
       </button>
-      {#if loaded}
-        <h1 class="text-4xl font-bold capitalize md:-ml-1">{title}</h1>
-      {/if}
+      <h1 class="text-4xl font-bold capitalize md:-ml-1">{title}</h1>
     </div>
     <p class="text-sm">
       written on {new Date(date).toLocaleDateString('en-US', {
