@@ -2,7 +2,6 @@
   import { page } from '$app/stores';
   import BackArrow from '$components/icons/BackArrow.svelte';
   import { fade, scale } from 'svelte/transition';
-  import { preloadProject } from '$lib/project';
 
   const projects = $page.data.projects;
 
@@ -13,10 +12,6 @@
     if (skeleton) {
       skeleton.remove();
     }
-  }
-
-  function onProjectHover(slug: string) {
-    preloadProject(slug);
   }
 </script>
 
@@ -42,7 +37,6 @@
         href={`/projects/${project.slug}`}
         class="group relative rounded-xl bg-base-200 transition-all hover:bg-base-100 hover:shadow-lg"
         in:scale={{ duration: 300, delay: 150, start: 0.95 }}
-        onmouseenter={() => onProjectHover(project.slug)}
       >
         <div class="relative aspect-video w-full">
           <div
