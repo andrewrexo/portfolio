@@ -13,6 +13,19 @@
       skeleton.remove();
     }
   }
+
+  // Preload images
+  $effect(() => {
+    projects.forEach((project) => {
+      if (project.image) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = project.image;
+        document.head.appendChild(link);
+      }
+    });
+  });
 </script>
 
 <div class="mx-auto flex max-w-5xl flex-col px-2 py-8">
@@ -47,6 +60,8 @@
             alt={project.title}
             class="h-full w-full rounded-t-xl object-cover opacity-0 transition-all duration-300 group-hover:scale-95"
             onload={onImageLoad}
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
         <div class="mb-4 px-4 py-2">

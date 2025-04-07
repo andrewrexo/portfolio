@@ -42,17 +42,22 @@ export const loadProjectsFromDisk = async () => {
 };
 
 export const loadProjectFromDisk = async (slug: string) => {
+  const projectFiles = import.meta.glob('/src/projects/*.md');
   const projectPath = `/src/projects/${slug}.md`;
-  const project = await import(projectPath);
 
-  if (project && typeof project === 'object' && 'metadata' in project && 'default' in project) {
-    const metadata = project.metadata as Omit<Project, 'slug'>;
+  if (projectPath in projectFiles) {
+    const project = await projectFiles[projectPath]();
 
-    return {
-      slug,
-      ...metadata,
-      content: project.default
-    };
+    if (project && typeof project === 'object' && 'metadata' in project && 'default' in project) {
+      const metadata = project.metadata as Omit<Project, 'slug'>;
+
+      return {
+        slug,
+        ...metadata,
+        content: project.default
+      };
+    }
   }
-  return null; // Return null if no project is found
+
+  return null;
 };
