@@ -11,7 +11,7 @@
 </script>
 
 <footer
-  class="{position} bottom-0 max-h-16 w-screen bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-sm sm:min-h-10"
+  class="{position} bottom-0 max-h-16 w-screen bg-base-100/80 py-2 text-base-content shadow-md backdrop-blur-xs sm:min-h-10"
   in:fly={{ duration: 200, y: 25, easing: quintOut }}
   out:fly={{ duration: 200, y: 25, easing: quintOut }}
 >

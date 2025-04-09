@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import BackArrow from '$components/icons/BackArrow.svelte';
+  import type { Project } from '$lib/project';
   import { fade, scale } from 'svelte/transition';
 
   const projects = $page.data.projects;
@@ -16,7 +17,7 @@
 
   // Preload images
   $effect(() => {
-    projects.forEach((project) => {
+    projects.forEach((project: Project) => {
       if (project.image) {
         const link = document.createElement('link');
         link.rel = 'preload';
@@ -34,7 +35,7 @@
       aria-label="Back to home"
       id="back-to-home"
       onclick={() => history.back()}
-      class="transition duration-300 hover:rotate-6 hover:text-primary"
+      class="hover:text-primary transition duration-300 hover:rotate-6"
     >
       <BackArrow class="mt-1 size-7" />
     </button>
@@ -48,12 +49,12 @@
     {#each projects as project}
       <a
         href={`/projects/${project.slug}`}
-        class="group relative rounded-xl bg-base-200 transition-all hover:bg-base-100 hover:shadow-lg"
+        class="group bg-base-200 hover:bg-base-100 relative rounded-xl transition-all hover:shadow-lg"
         in:scale={{ duration: 300, delay: 150, start: 0.95 }}
       >
         <div class="relative aspect-video w-full">
           <div
-            class="absolute inset-0 animate-pulse rounded-t-xl bg-gradient-to-r from-base-300 to-base-200 transition-opacity duration-300"
+            class="from-base-300 to-base-200 absolute inset-0 animate-pulse rounded-t-xl bg-linear-to-r transition-opacity duration-300"
           ></div>
           <img
             src={project.image}
@@ -65,7 +66,7 @@
           />
         </div>
         <div class="mb-4 px-4 py-2">
-          <h2 class="mb-2 text-2xl font-bold lowercase text-primary group-hover:text-primary/80">
+          <h2 class="text-primary group-hover:text-primary/80 mb-2 text-2xl font-bold lowercase">
             {project.title}
           </h2>
           <p class="text-muted-foreground line-clamp-2 lowercase">{project.description}</p>
@@ -75,7 +76,7 @@
                  rounded-xl bg-black/30 opacity-0
                  transition-opacity duration-300 group-hover:opacity-100"
         >
-          <span class="rounded-full bg-primary px-6 py-2 font-semibold text-white">
+          <span class="bg-primary rounded-full px-6 py-2 font-semibold text-white">
             View Project
           </span>
         </div>

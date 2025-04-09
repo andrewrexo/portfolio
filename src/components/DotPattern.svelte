@@ -14,7 +14,7 @@
   let id = crypto.randomUUID().toString().slice(0, 10); // generating a unique ID for Components
 </script>
 
-<div class={cn('relative h-full w-full flex-grow', className)} {...$$restProps}>
+<div class={cn('relative h-full w-full grow', className)} {...$$restProps}>
   <svg
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 h-full w-full"

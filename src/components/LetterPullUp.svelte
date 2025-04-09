@@ -37,7 +37,7 @@
 <div class="flex flex-wrap md:flex-nowrap">
   {#if visible}
     <div
-      class="mt-1 flex items-center text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl"
+      class="mt-1 flex items-center text-xl font-bold tracking-[-0.02em] drop-shadow-xs md:text-4xl"
       transition:slideSpringFly={{
         y: -80,
         delay: delay
@@ -52,7 +52,7 @@
   {#each letters as letter, i (i)}
     {#if visible}
       <h1
-        class={cn('text-xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-4xl', className)}
+        class={cn('text-xl font-bold tracking-[-0.02em] drop-shadow-xs md:text-4xl', className)}
         transition:slideSpringFly={{
           y: -100,
           delay: i * delay * 1.5 + 150

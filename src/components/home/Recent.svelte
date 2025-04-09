@@ -29,28 +29,28 @@
           transition:fade={{ duration: 300 }}
         >
           <div class="flex justify-between gap-4">
-            <div class="h-6 w-48 rounded bg-white/40"></div>
+            <div class="h-6 w-48 rounded-sm bg-white/40"></div>
             <div class="flex gap-2">
-              <div class="h-5 w-16 rounded bg-white/40"></div>
-              <div class="h-5 w-16 rounded bg-white/40"></div>
+              <div class="h-5 w-16 rounded-sm bg-white/40"></div>
+              <div class="h-5 w-16 rounded-sm bg-white/40"></div>
             </div>
           </div>
-          <div class="mt-2 h-4 w-full rounded bg-white/40"></div>
-          <div class="mt-1 h-4 w-3/4 rounded bg-white/40"></div>
-          <div class="mt-2 h-3 w-24 rounded bg-white/40"></div>
+          <div class="mt-2 h-4 w-full rounded-sm bg-white/40"></div>
+          <div class="mt-1 h-4 w-3/4 rounded-sm bg-white/40"></div>
+          <div class="mt-2 h-3 w-24 rounded-sm bg-white/40"></div>
         </div>
       {/each}
     {:else}
       {#each posts as post}
         {#if mounted}
           <button
-            class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md outline-none brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
+            class="card rounded-lg border border-base-200 bg-base-100 p-2 shadow-md outline-hidden brightness-105 transition-all hover:-translate-y-1 hover:cursor-pointer active:-translate-y-1 active:scale-[0.975]"
             onclick={() => goto(`/post/${post.slug}`)}
             transition:scale={{ start: 0.9, duration: 500 }}
           >
-            <div class="flex justify-between gap-4">
-              <h3 class="text-left text-lg font-semibold">{post.title}</h3>
-              <span class="space-x-1">
+            <div class="flex flex-wrap justify-between gap-4">
+              <h3 class="flex-1 text-left text-lg font-semibold">{post.title}</h3>
+              <span class="flex flex-wrap justify-end space-x-1">
                 {#each post.categories as category}
                   <span class="badge badge-sm border-none bg-primary/40 py-2">
                     {category}
