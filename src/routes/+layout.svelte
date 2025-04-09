@@ -11,8 +11,9 @@
 
   let mounted = $state(false);
   let hasViewTransitions = $state(false);
-  let isProject = $derived($page.url.pathname === '/projects');
-  let showFooter = $derived(!isProject);
+  // let isProject = $derived($page.url.pathname === '/projects');
+  // let showFooter = $derived(!isProject);
+  const showFooter = true;
 
   const toTitleCase = (str: string) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());

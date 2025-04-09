@@ -37,7 +37,7 @@
       onclick={() => history.back()}
       class="hover:text-primary transition duration-300 hover:rotate-6"
     >
-      <BackArrow class="mt-1 size-7" />
+      <BackArrow class="mt-1 ml-2 size-7" />
     </button>
     <h1 class="text-3xl font-extrabold">work & projects</h1>
   </section>
