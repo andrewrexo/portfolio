@@ -3,11 +3,13 @@
   import { fly } from 'svelte/transition';
   import LetterPullUp from '../LetterPullUp.svelte';
   import { goto } from '$app/navigation';
-  import { PersonStanding, FolderGit2, Gamepad2 } from 'lucide-svelte';
+  import { PersonStanding, FolderGit2, MailPlus } from 'lucide-svelte';
 
   const handleNavigation = (path: string) => {
     goto(path);
   };
+
+  const contactUrl = 'https://linkedin.com/in/andrew-rubenstein-702807261';
 </script>
 
 <section class="flex h-full w-full flex-col justify-center gap-6">
@@ -28,8 +30,9 @@
     <button
       class="btn btn-accent btn-soft btn-block btn-xl"
       in:fly={{ y: 225, duration: 500, delay: 500, easing: quintOut }}
+      onclick={() => window.open(contactUrl, '_blank')}
     >
-      play a game <Gamepad2 class="mt-0.5 ml-1 size-6" />
+      contact me <MailPlus class="mt-0.5 ml-1 size-6" />
     </button>
   </div>
 </section>
