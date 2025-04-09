@@ -27,13 +27,13 @@
   });
 
   $effect(() => {
-    if (isProject) {
-      document.documentElement.style.cssText = 'overscroll-behavior-y: none;';
-      document.body.style.cssText = 'overscroll-behavior-y: none;';
-    } else {
-      document.documentElement.style.cssText = '';
-      document.body.style.cssText = '';
-    }
+    // if (isProject) {
+    //   document.documentElement.style.cssText = 'overscroll-behavior-y: none;';
+    //   document.body.style.cssText = 'overscroll-behavior-y: none;';
+    // } else {
+    //   document.documentElement.style.cssText = '';
+    //   document.body.style.cssText = '';
+    // }
 
     return () => {
       document.documentElement.style.cssText = '';
