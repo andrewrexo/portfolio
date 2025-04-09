@@ -72,12 +72,14 @@
           <p class="text-muted-foreground line-clamp-2 lowercase">{project.description}</p>
         </div>
         <div
-          class="absolute inset-0 flex items-center justify-center
-                 rounded-xl bg-black/30 opacity-0
-                 transition-opacity duration-300 group-hover:opacity-100"
+          class="absolute inset-0 flex items-center justify-center rounded-xl
+                 bg-black/30 opacity-0 transition-all
+                 duration-300 group-hover:opacity-100"
         >
-          <span class="bg-primary rounded-full px-6 py-2 font-semibold text-white">
-            View Project
+          <span
+            class="btn btn-md btn-info btn-soft transition-all group-hover:mb-20 hover:cursor-default"
+          >
+            Open Project
           </span>
         </div>
       </a>
