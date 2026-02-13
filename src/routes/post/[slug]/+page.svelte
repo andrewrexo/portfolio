@@ -10,7 +10,7 @@
   } = data;
 </script>
 
-<article class="mx-auto flex max-w-3xl flex-col justify-start py-12 md:py-16">
+<article class="mx-auto flex max-w-4xl flex-col justify-start py-12 md:py-16">
   <header class="mb-8 flex flex-col gap-4 animate-fade-in">
     <div class="flex items-center gap-4">
       <button

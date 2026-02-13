@@ -25,7 +25,7 @@
   <link rel="canonical" href={`https://rubes.dev/projects/${slug}`} />
 </svelte:head>
 
-<article class="mx-auto w-full max-w-3xl py-12 md:py-16">
+<article class="mx-auto w-full max-w-4xl py-12 md:py-16">
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}
     class="animate-fade-in max-w-none"
