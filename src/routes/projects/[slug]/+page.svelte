@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BackArrow from '$components/icons/BackArrow.svelte';
+  import { page } from '$app/stores';
   import Github from '$components/icons/Github.svelte';
   import type { Snippet } from 'svelte';
 
@@ -8,6 +8,7 @@
   const content = data.content as Snippet;
 
   const hasViewTransitions = 'startViewTransition' in document;
+  const fromHome = $page.url.searchParams.get('from') === 'home';
 </script>
 
 <svelte:head>
@@ -25,24 +26,21 @@
   <link rel="canonical" href={`https://rubes.dev/projects/${slug}`} />
 </svelte:head>
 
-<article class="mx-auto w-full max-w-4xl py-12 md:py-16">
+<article class="mx-auto w-full max-w-6xl py-12 md:py-16">
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}
     class="animate-fade-in max-w-none"
   >
     <section class="mb-8 flex flex-col gap-6">
-      <div class="flex items-center gap-4">
-        <button
-          aria-label="Back to projects"
-          onclick={() => history.back()}
-          class="text-base-content/40 transition-colors duration-200 hover:text-primary"
-        >
-          <BackArrow class="size-5" />
-        </button>
-        <h1 class="font-display text-3xl text-base-content md:text-4xl">
-          {title}
-        </h1>
-      </div>
+      <a
+        href={fromHome ? '/' : '/projects'}
+        class="font-mono text-sm tracking-wide text-base-content/30 transition-colors duration-200 hover:text-primary"
+      >
+        &larr; {fromHome ? 'back to home' : 'back to projects'}
+      </a>
+      <h1 class="font-display text-3xl text-base-content md:text-4xl">
+        {title}
+      </h1>
       <p class="text-base font-light text-base-content/50">{description}</p>
       {#if github || demo}
         <div class="flex gap-4">

@@ -12,7 +12,7 @@
   <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
     {#each featured as project, i}
       <a
-        href={`/projects/${project.slug}`}
+        href={`/projects/${project.slug}?from=home`}
         class="group flex flex-col gap-4"
         style="animation: fadeInUp 0.6s ease-out {0.1 + i * 0.1}s both"
       >

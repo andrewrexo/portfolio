@@ -1,20 +1,18 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import BackArrow from '$components/icons/BackArrow.svelte';
   import type { Project } from '$lib/project';
 
   const projects = $page.data.projects;
 </script>
 
 <div class="flex flex-col py-12 md:py-16">
-  <section class="mb-12 flex items-center gap-4">
-    <button
-      aria-label="Back to home"
-      onclick={() => history.back()}
-      class="text-base-content/40 transition-colors duration-200 hover:text-primary"
+  <section class="mb-12 flex flex-col gap-6">
+    <a
+      href="/"
+      class="font-mono text-sm tracking-wide text-base-content/30 transition-colors duration-200 hover:text-primary"
     >
-      <BackArrow class="size-5" />
-    </button>
+      &larr; back to home
+    </a>
     <h1 class="font-display text-3xl text-base-content md:text-4xl">work & projects</h1>
   </section>
 
