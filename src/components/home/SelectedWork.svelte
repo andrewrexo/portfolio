@@ -1,29 +1,20 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import BackArrow from '$components/icons/BackArrow.svelte';
   import type { Project } from '$lib/project';
 
-  const projects = $page.data.projects;
+  let { projects }: { projects: Project[] } = $props();
+
+  const featured = projects.slice(0, 3);
 </script>
 
-<div class="flex flex-col py-12 md:py-16">
-  <section class="mb-12 flex items-center gap-4">
-    <button
-      aria-label="Back to home"
-      onclick={() => history.back()}
-      class="text-base-content/40 transition-colors duration-200 hover:text-primary"
-    >
-      <BackArrow class="size-5" />
-    </button>
-    <h1 class="font-display text-3xl text-base-content md:text-4xl">work & projects</h1>
-  </section>
+<section class="flex flex-col gap-8">
+  <span class="font-mono text-sm tracking-wider text-base-content/40">01 — selected work</span>
 
-  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-    {#each projects as project, i}
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    {#each featured as project, i}
       <a
         href={`/projects/${project.slug}`}
         class="group flex flex-col gap-4"
-        style="animation: fadeInUp 0.5s ease-out {i * 0.08}s both"
+        style="animation: fadeInUp 0.6s ease-out {0.1 + i * 0.1}s both"
       >
         <div class="overflow-hidden rounded-lg bg-base-100">
           {#if project.image}
@@ -38,11 +29,11 @@
           {/if}
         </div>
         <div class="flex flex-col gap-1">
-          <h2
+          <h3
             class="font-display text-xl text-base-content transition-colors duration-200 group-hover:text-primary"
           >
             {project.title}
-          </h2>
+          </h3>
           <p class="line-clamp-2 text-sm font-light text-base-content/50">
             {project.description}
           </p>
@@ -50,4 +41,11 @@
       </a>
     {/each}
   </div>
-</div>
+
+  <a
+    href="/projects"
+    class="self-start text-sm text-base-content/40 transition-colors duration-200 hover:text-primary"
+  >
+    view all work &rarr;
+  </a>
+</section>

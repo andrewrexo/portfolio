@@ -4,7 +4,7 @@ description: An embeddable crypto-to-crypto cross-chain swap widget built with R
 image: /milkshake.webp
 github: https://github.com/andrewrexo/milkshake
 demo: https://milkshake-co1.pages.dev/
-priority: 1
+priority: 0
 published: true
 ---
 

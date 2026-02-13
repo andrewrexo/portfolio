@@ -1,10 +1,11 @@
 <script lang="ts">
   import BackArrow from '$components/icons/BackArrow.svelte';
   import Github from '$components/icons/Github.svelte';
-  import { ExternalLink } from 'lucide-svelte';
+  import type { Snippet } from 'svelte';
 
   let { data } = $props();
-  const { title, description, slug, content, github, demo } = data;
+  const { title, description, slug, github, demo } = data;
+  const content = data.content as Snippet;
 
   const hasViewTransitions = 'startViewTransition' in document;
 </script>
@@ -24,34 +25,36 @@
   <link rel="canonical" href={`https://rubes.dev/projects/${slug}`} />
 </svelte:head>
 
-<article class="mx-auto w-full max-w-5xl">
+<article class="mx-auto w-full max-w-3xl py-12 md:py-16">
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}
-    class="mt-8 max-w-none px-4 pb-8"
+    class="animate-fade-in max-w-none"
   >
-    <section class="flex items-center gap-4">
-      <div class="flex w-full flex-col justify-between gap-6 md:flex-row">
-        <h1 class="flex gap-4 text-3xl font-extrabold lowercase">
-          <button
-            aria-label="Back to home"
-            id="back-to-home"
-            onclick={() => history.back()}
-            class="transition duration-300 hover:rotate-6 hover:text-primary"
-          >
-            <BackArrow class="-mb-1 size-7" />
-          </button>
+    <section class="mb-8 flex flex-col gap-6">
+      <div class="flex items-center gap-4">
+        <button
+          aria-label="Back to projects"
+          onclick={() => history.back()}
+          class="text-base-content/40 transition-colors duration-200 hover:text-primary"
+        >
+          <BackArrow class="size-5" />
+        </button>
+        <h1 class="font-display text-3xl text-base-content md:text-4xl">
           {title}
         </h1>
+      </div>
+      <p class="text-base font-light text-base-content/50">{description}</p>
+      {#if github || demo}
         <div class="flex gap-4">
           {#if github}
             <a
               href={github}
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-outline btn-primary btn-sm"
+              class="inline-flex items-center gap-2 text-sm text-base-content/40 transition-colors duration-200 hover:text-primary"
             >
+              <Github size="14" />
               github
-              <Github />
             </a>
           {/if}
           {#if demo}
@@ -59,17 +62,16 @@
               href={demo}
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-outline btn-primary btn-sm"
+              class="inline-flex items-center gap-1 text-sm text-base-content/40 transition-colors duration-200 hover:text-primary"
             >
-              live demo
-              <ExternalLink class="size-4" />
+              live demo &nearr;
             </a>
           {/if}
         </div>
-      </div>
+      {/if}
     </section>
-    <h3 class="text-md my-6 pb-2 font-light text-neutral-content">{description}</h3>
-    <div class="prose-md prose prose-invert max-w-none prose-img:mx-auto">
+    <hr class="mb-8" />
+    <div class="prose prose-lg prose-warm max-w-none">
       {@render content()}
     </div>
   </div>

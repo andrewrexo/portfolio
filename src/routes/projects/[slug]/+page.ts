@@ -12,7 +12,7 @@ export const load = (async ({ params }) => {
 
     const project = await loadProjectFromDisk(params.slug);
 
-    if (!project || !project.title || !project.image) {
+    if (!project || !project.title) {
       throw error(404, 'Project content is incomplete');
     }
 

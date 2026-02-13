@@ -50,7 +50,9 @@ const config = {
         '/projects/vanitygen',
         '/projects/hometown',
         '/projects/eoproxyts',
-        '/projects/swappage'
+        '/projects/swappage',
+        '/projects/aeven',
+        '/projects/merklemines'
       ]
     }
   }

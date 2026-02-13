@@ -1,17 +1,70 @@
 @import 'tailwindcss';
 @plugin "daisyui" {
-  themes: night --default;
+  themes: studio-dark --default, studio-light;
 }
 @plugin "@tailwindcss/typography";
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+/* Custom daisyUI themes */
+@plugin "daisyui/theme" {
+  name: "studio-dark";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #131620;
+  --color-base-200: #0F1219;
+  --color-base-300: #0A0F1A;
+  --color-base-content: #D8DBE2;
+  --color-primary: #C2703E;
+  --color-primary-content: #F7F7F5;
+  --color-secondary: #7A8599;
+  --color-secondary-content: #F7F7F5;
+  --color-accent: #C2703E;
+  --color-accent-content: #F7F7F5;
+  --color-neutral: #1E2230;
+  --color-neutral-content: #D8DBE2;
+  --color-info: #7A8599;
+  --color-info-content: #F7F7F5;
+  --color-success: #6B8F71;
+  --color-warning: #C2703E;
+  --color-error: #B85450;
+  --rounded-box: 0.5rem;
+  --rounded-btn: 0.375rem;
+}
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+@plugin "daisyui/theme" {
+  name: "studio-light";
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #FFFFFF;
+  --color-base-200: #FAFAF9;
+  --color-base-300: #F5F5F3;
+  --color-base-content: #111318;
+  --color-primary: #B56535;
+  --color-primary-content: #FFFFFF;
+  --color-secondary: #555B66;
+  --color-secondary-content: #FFFFFF;
+  --color-accent: #B56535;
+  --color-accent-content: #FFFFFF;
+  --color-neutral: #EBEBEA;
+  --color-neutral-content: #111318;
+  --color-info: #6B7280;
+  --color-info-content: #FFFFFF;
+  --color-success: #6B8F71;
+  --color-warning: #C2703E;
+  --color-error: #B85450;
+  --rounded-box: 0.5rem;
+  --rounded-btn: 0.375rem;
+}
+
+/* Font system */
+@theme {
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+/* Tailwind v4 border compatibility */
 @layer base {
   *,
   ::after,
@@ -20,4 +73,121 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  html {
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base-300);
+    min-height: 100dvh;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: #C2703E;
+    color: #F5F0EB;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1E2230;
+    border-radius: 3px;
+  }
+
+  [data-theme="studio-light"] ::-webkit-scrollbar-thumb {
+    background: #E8E8E6;
+  }
+
+  /* Horizontal rule styling */
+  hr {
+    border-color: var(--color-neutral);
+    opacity: 0.5;
+  }
+}
+
+/* Prose styling for warm dark/light */
+@layer components {
+  .prose-warm {
+    --tw-prose-body: var(--color-base-content);
+    --tw-prose-headings: var(--color-base-content);
+    --tw-prose-links: #C2703E;
+    --tw-prose-bold: var(--color-base-content);
+    --tw-prose-code: var(--color-base-content);
+    --tw-prose-quotes: var(--color-base-content);
+    --tw-prose-hr: var(--color-neutral);
+  }
+
+  .prose-warm a {
+    color: #C2703E;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #C2703E40;
+    transition: text-decoration-color 0.2s ease;
+  }
+
+  .prose-warm a:hover {
+    text-decoration-color: #C2703E;
+  }
+
+  .prose-warm code {
+    font-family: var(--font-mono);
+  }
+
+  .prose-warm img {
+    border-radius: 0.5rem;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out both;
 }
