@@ -44,6 +44,7 @@ const config = {
         '/projects',
         '/post',
         '/post/choosing-svelte',
+        '/post/building-an-mmo-with-claude-code',
         '/projects/opentxpacker',
         '/projects/milkshake',
         '/projects/mappingtool',

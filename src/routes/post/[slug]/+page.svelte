@@ -5,7 +5,8 @@
   let { data } = $props();
   let {
     content,
-    meta: { title, date, image }
+    image,
+    meta: { title, date }
   } = data;
 </script>
 

@@ -6,7 +6,7 @@
       title: 'Frontend Engineer',
       period: 'May 2025 — Jul 2025',
       description:
-        'Led a full platform rewrite from a legacy Create React App codebase to a modern stack with TanStack Start and Zedux for state management — optimizing for low latency and high performance across an all-in-one crypto trading terminal.'
+        'Led a full platform rewrite from a legacy Create React App codebase to a modern stack with TanStack Start and Zedux for state management, optimizing for low latency and high performance across an all-in-one crypto trading terminal.'
     },
     {
       company: 'N.exchange',

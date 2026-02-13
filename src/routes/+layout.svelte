@@ -80,6 +80,12 @@
         Work
       </a>
       <a
+        href="/#experience"
+        class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+      >
+        Experience
+      </a>
+      <a
         href="/#writing"
         class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
       >
@@ -166,19 +172,25 @@
       <div class="flex flex-col gap-4">
         <a
           href="/projects"
-          class="text-sm text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
         >
           Work
         </a>
         <a
+          href="/#experience"
+          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+        >
+          Experience
+        </a>
+        <a
           href="/#writing"
-          class="text-sm text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
         >
           Writing
         </a>
         <a
           href="mailto:andrew@rubes.dev"
-          class="text-sm text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
         >
           Contact
         </a>

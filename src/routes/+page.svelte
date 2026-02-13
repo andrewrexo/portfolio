@@ -19,7 +19,9 @@
 
   <SelectedWork projects={data.projects} />
 
-  <Experience />
+  <section id="experience">
+    <Experience />
+  </section>
 
   <section id="writing">
     <Writing posts={data.posts} />

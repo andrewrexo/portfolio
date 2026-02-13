@@ -23,19 +23,20 @@ export async function load({ params }) {
       throw error(404, 'Post content is incomplete');
     }
 
-    // Ensure image path is absolute
-    const image = module.metadata.image
-      ? module.metadata.image.startsWith('/')
-        ? `https://rubes.dev${module.metadata.image}`
-        : `https://rubes.dev/${module.metadata.image}`
+    const rawImage = module.metadata.image || null;
+    const ogImage = rawImage
+      ? rawImage.startsWith('/')
+        ? `https://rubes.dev${rawImage}`
+        : `https://rubes.dev/${rawImage}`
       : 'https://rubes.dev/opengraph-image.jpg';
 
     return {
       content,
+      image: rawImage,
       meta: {
         title: module.metadata.title,
         description: module.metadata.description || 'Read this post on rubes.dev',
-        image,
+        image: ogImage,
         date: module.metadata.date
       }
     };

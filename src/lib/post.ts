@@ -7,7 +7,9 @@ export const Categories = [
   'tailwindcss',
   'css',
   'html',
-  'web3'
+  'web3',
+  'rust',
+  'ai'
 ] as const;
 
 export type Category = (typeof Categories)[number];
