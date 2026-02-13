@@ -70,7 +70,7 @@
       {/if}
     </section>
     <hr class="mb-8" />
-    <div class="prose prose-lg prose-warm max-w-none">
+    <div class="prose prose-warm max-w-none">
       {@render content()}
     </div>
   </div>

@@ -4,7 +4,7 @@ description: An advanced proxy server built to intercept and modify incoming pac
 image: /eoproxyts.webp
 github: https://github.com/Qwiddle/eoproxy-ts
 published: true
-priority: 3
+priority: 4
 ---
 
 <img style="view-transition-name: image-eoproxyts" src="/eoproxyts.webp" width="700" />

@@ -26,7 +26,7 @@
     </span>
   </header>
   <hr class="mb-8" />
-  <div class="prose prose-lg prose-warm max-w-none animate-fade-in-up">
+  <div class="prose prose-warm max-w-none animate-fade-in-up">
     {#if image}
       <img src={image} alt={title} class="rounded-lg" />
     {/if}

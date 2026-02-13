@@ -8,14 +8,27 @@ priority: 0
 published: true
 ---
 
-<img width="400px" class="rounded-lg" height="200px" alt="image" src="/milkshake.webp">
+<img style="view-transition-name: image-milkshake" src="/milkshake.webp" width="400" alt="Milkshake" />
+
+## Overview
+
+Milkshake is a drop-in swap widget that lets any dApp or website offer cross-chain token swaps without building the infrastructure themselves. Think of it like Stripe Checkout, but for crypto swaps. Embed it with a few lines of code, style it to match your brand, and you're live.
+
+The goal was to make cross-chain swaps feel effortless for end users while giving developers full control over theming, supported networks, and asset configuration.
 
 ## Features
 
-This was a learning project that helped me get more familiar with using wagmi/viem and the solana web3 wallet adapter. It's got quite a few features already:
+- **Cross-chain bridging** via the Hop Protocol API, supporting token transfers across EVM-compatible networks
+- **Multi-wallet support** for both Solana and EVM chains. Users can connect wallets from different ecosystems simultaneously and get prompted contextually based on the selected network
+- **Real-time token balances and pricing**, pulled on connection and refreshed automatically. USD conversion displayed inline so users always know what they're working with
+- **Fully themeable** with a dynamic styling system. Third-party integrators can match the widget to their existing design system with minimal effort
+- **Accessible by default**. Built with proper ARIA attributes, keyboard navigation, and focus management. Every component was hand-crafted with accessibility best practices in mind
+- **Lightweight and embeddable**. Designed to drop into any React app with minimal bundle overhead
 
-1. Bridging EVM tokens via https://hop.exchange/ api
-2. Dynamic styles: allowing 3rd parties to integrate the widget with ease
-3. Multi-wallet connections: Solana and EVM network wallets can be connected and prompted on demand
-4. Loading user's token balances & USD prices on connected networks
-5. Accessible and sleek UI: built with accessability best practices in mind. Components carefully crafted by hand
+## Tech Stack
+
+- **Framework:** React, TypeScript
+- **Web3:** wagmi, viem, Solana Web3 wallet adapter
+- **Bridging:** Hop Protocol API
+- **Styling:** Custom theming engine with CSS variables
+- **Build:** Vite, published as an npm-ready package
