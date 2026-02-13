@@ -4,7 +4,7 @@ description: A cross-chain swap platform built with Next.js, Radix UI, Redux, an
 image: /swappage.webp
 github: https://github.com/andrewrexo/swappage
 demo: https://swappage.vercel.app/
-priority: 2
+priority: 3
 published: true
 ---
 

@@ -3,13 +3,13 @@
 
   let { projects }: { projects: Project[] } = $props();
 
-  const featured = projects.slice(0, 3);
+  const featured = projects.slice(0, 4);
 </script>
 
 <section class="flex flex-col gap-8">
   <span class="font-mono text-sm tracking-wider text-base-content/40">01 — selected work</span>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
     {#each featured as project, i}
       <a
         href={`/projects/${project.slug}?from=home`}

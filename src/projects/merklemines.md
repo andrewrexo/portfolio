@@ -4,9 +4,11 @@ description: A provably-fair Bitcoin mines game with a full double-entry ledger,
 github: null
 demo: https://merklemines.com
 image: /merklemines.webp
-priority: 3
+priority: 1
 published: true
 ---
+
+<img style="view-transition-name: image-merklemines" src="/merklemines.webp" width="700" alt="Merkle Mines" />
 
 ## Overview
 
