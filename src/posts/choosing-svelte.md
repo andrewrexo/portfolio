@@ -1,29 +1,33 @@
 ---
 title: Svelte is the best frontend framework
-description: svelte is great - now with svelte 5 it's even better.
+description: Why I keep coming back to Svelte, and why Svelte 5 made the choice even easier.
 date: '2024-11-04'
 categories:
   - sveltekit
   - svelte
 published: true
-image: /svelte-is-the-best-framework.avif
+image: /svelte-cover.svg
 ---
 
-I've been around the frontend block more times than I'd like to admit. React, Vue, Solid, even the occasional fling with Alpine or Lit. But no matter what I try, I keep coming back to Svelte. And with Svelte 5 on the scene, that return feels less like a choice and more like fate.
+I've been around the frontend block more times than I'd like to admit. I've built with React, Vue, and Solid, along with the occasional project in Alpine or Lit. Some of them were good experiences. A few made me question my career choices. No matter what I try, though, I keep coming back to Svelte.
 
-React still dominates the frontend landscape, but Svelte 5 takes a radically different approach. React leans heavily on the virtual DOM and hooks, which often leads to overengineering simple interactions with `useEffect`, `useMemo`, and `useCallback`. Svelte throws all of that out. There's no virtual DOM. Components compile down to minimal, framework-less JavaScript at build time.
+That became an even easier decision with Svelte 5.
 
-With runes in Svelte 5, the reactivity model becomes explicit, composable, and predictable. No more mysterious dependency arrays or stale closures. You don't have to teach your brain to juggle the React lifecycle. You just write logic that updates when data changes. It's a fundamentally different mental model that lets you build apps like you're writing plain JavaScript, with superpowers.
+React still dominates frontend development, so it is the comparison I end up making most often. React relies heavily on the virtual DOM and hooks. Those tools work, but a simple interaction can quickly turn into a small pile of `useEffect`, `useMemo`, `useCallback`, and dependency arrays. I know how to write that code. I would simply rather not when the problem itself is straightforward.
+
+Svelte approaches the browser differently. Components are compiled at build time into small pieces of JavaScript, without a virtual DOM sitting between the component and the page. In practice, I spend less time translating what I want into framework-specific machinery.
+
+Svelte 5's runes make that mental model more explicit. State is state. Derived values are derived values. Effects are there when I genuinely need to react to something outside that flow. I do not have to keep a second model of hook lifecycles and dependency arrays in my head while reading the code.
 
 ---
 
-## Runes: Reactivity, Rewritten
+## Runes make the magic easier to follow
 
-Svelte's old `$:` syntax was cool, but let's be real, it got weird fast. Magic is fun until you try to scale or abstract it. That's where runes come in.
+I liked Svelte's old `$:` syntax, but it could get strange once the logic grew or needed to move outside a component. The magic was pleasant right up until I had to work out exactly where it stopped.
 
-Reactivity is now based on `$state`, `$derived`, and `$effect`. Simple functions that bring reactive values to life without hiding logic.
+Runes replace that ambiguity with `$state`, `$derived`, and `$effect`. The reactive pieces are visible in the code, which makes them easier to compose and easier to find later.
 
-Here's what a Svelte 5 component looks like with runes:
+Here is a small Svelte 5 component using runes:
 
 ```svelte
 <script>
@@ -63,64 +67,52 @@ Here's what a Svelte 5 component looks like with runes:
 </div>
 ```
 
-That's clean, readable, and scalable. There's no guessing what's reactive or when something runs. You can pick this code up a year later and _understand it instantly_.
+What I like here is how little ceremony sits around the actual behavior. There is a count, a step size, two derived values, and a few event handlers. The reactive parts announce themselves without taking over the component. If I return to it a year later, I can follow what changes and why without reconstructing a lifecycle first.
 
 ---
 
-## SvelteKit Makes It Even Better
+## SvelteKit covers the rest
 
-Svelte 5 doesn't live in a vacuum. With [SvelteKit](https://kit.svelte.dev/) evolving alongside it, you get the modern app stack right out of the box:
+Svelte is the component layer. [SvelteKit](https://kit.svelte.dev/) is what makes it practical for me to use on a full application.
 
-- File-based routing that feels natural
-- Server functions and API endpoints with zero configuration
-- Fast page transitions with built-in animations
-- Automatic code-splitting and preloading
-- SEO-friendly by default with server-side rendering
-- Hot module replacement that actually works
-- Deployment to any platform with adapters for Vercel, Netlify, and more
+It handles the things I expect from a modern web framework: file-based routing, server functions, API endpoints, server-side rendering, code splitting, preloading, page transitions, and hot module replacement. Its adapters also let me deploy to platforms such as Vercel and Netlify without rebuilding the application around the host.
 
-It's like Next.js but without the mental gymnastics. SvelteKit gives you everything you need to build production-ready apps without the framework fatigue.
+Next.js covers much of the same ground. The difference, for me, is how much framework knowledge I need to carry while using it. SvelteKit generally lets me move from a route to its data and server logic without digging through several overlapping conventions. I still need to understand what the framework is doing, but I spend less time negotiating with it.
 
-The best part? It all just works together, letting you focus on building your app instead of fighting build tools.
+That matters on real projects. Build tooling is useful, but I do not want it to become the project.
 
 ---
 
-## So Why Do I Use Svelte?
+## Why I keep choosing it
 
-Svelte has become my go-to. It's not the cool new kid on the block. It's refreshingly _not_ the latest React clone. I reach for Svelte when:
+Svelte is my default when I want to ship quickly without filling the codebase with boilerplate. The components stay readable, the bundles stay small, and I can build a larger application without reaching for an enormous framework setup on day one.
 
-- I need to ship fast without drowning in boilerplate
-- I want code that's easy to read, not a legal document
-- I'm building something that needs to scale but I don't need a nuclear-powered framework to get there
-- I care about small bundle sizes and fast load times
-- I want to actually enjoy writing frontend code again
+More importantly, I enjoy writing it. That sounds like a soft reason until you spend months maintaining a frontend. A framework shapes every ordinary task in the project, so small amounts of friction get repeated hundreds of times.
 
-The magic of Svelte isn't just in what it does, it's in what it _doesn't_ do. No virtual DOM, no complex state management patterns, no endless configuration files. Just clean code that does what you expect.
+Svelte removes a lot of the friction I notice elsewhere. There is no virtual DOM to reason about, I rarely need elaborate state-management patterns, and the configuration tends to stay out of the way. The code usually resembles the interaction I had in mind when I started.
 
-Every time I start a new Svelte project, I'm not fighting the framework. I'm working _with_ it.
+I do not feel as if I am fighting the framework. That is probably the simplest explanation for why I keep returning to it.
 
 ---
 
-## The Gotchas
+## Where Svelte still gets awkward
 
-Let's be real, every framework has quirks. Svelte's no exception. But these aren't dealbreakers. The ecosystem is growing fast and Svelte is establishing itself as a serious contender.
+Svelte has tradeoffs, and pretending otherwise would make this a fairly useless recommendation.
 
-That said, here are some of the downsides of choosing Svelte in 2025:
+Its ecosystem is smaller than React's and was still catching up with Svelte 5. A niche package may not exist, or the package you find may not support runes yet. In those cases, I sometimes have to write the integration myself.
 
-- The ecosystem is still maturing, especially around Svelte 5. You might miss some niche npm packages, but honestly that often pushes you to write cleaner code anyway.
-- Third-party libraries are still catching up to runes. Sometimes you end up writing your own solution, which isn't always a bad thing.
-- You'll write more integration code compared to React, but it's clear, it makes sense, and you can actually understand it when you come back to it later.
+That can produce cleaner code because I only build the part I need, but it is still work. React's enormous ecosystem means there is usually an existing package, example, or Stack Overflow answer for whatever strange integration has landed on my desk. Svelte does not always give me that escape hatch.
 
-I'd take these tradeoffs over React's complexity tax any day. Clean syntax, a mental model that makes sense. That's the deal.
+I am willing to accept more integration code because the result is usually clear enough that I can understand it when I come back later. For the kinds of applications I build, that trade feels better than paying React's complexity cost throughout the entire codebase.
 
 ---
 
 ## Final thoughts
 
-Svelte changed how I think about frontend development. The approach to reactivity and state management is just straightforward. It makes writing and maintaining complex applications feel way less painful.
+Svelte changed what I expect from frontend development. State management and reactivity do not need to dominate the component, and a capable application framework does not need to make every decision feel like framework archaeology.
 
-If you haven't tried it yet, spin up a SvelteKit project and see for yourself. It might change how you think about building for the web.
+Calling anything the "best" framework is obviously subjective. Svelte is the best one for how I like to work: direct code, little ceremony, and fewer layers between an interaction and its implementation. Svelte 5 did not invent those qualities, but runes made them more consistent.
 
-If you're curious about Svelte 5, check out the [official docs](https://svelte.dev/docs) and the [SvelteKit docs](https://kit.svelte.dev/docs). The community is super welcoming on [Discord](https://svelte.dev/chat) and [GitHub Discussions](https://github.com/sveltejs/svelte/discussions).
+If you want to try it, the [official Svelte docs](https://svelte.dev/docs) and [SvelteKit docs](https://kit.svelte.dev/docs) are the best places to start. There is also an active community on [Discord](https://svelte.dev/chat) and [GitHub Discussions](https://github.com/sveltejs/svelte/discussions).
 
-Feel free to reach out if you want to chat about Svelte. My email is `andrew@rubes.dev`
+If you want to compare frontend framework scars, my email is `andrew@rubes.dev`.
