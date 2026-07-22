@@ -4,12 +4,13 @@
   import '$styles/app.css';
   import Footer from '$components/home/Footer.svelte';
   import { page } from '$app/stores';
+  import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-svelte';
 
   let { children } = $props();
 
   let mounted = $state(false);
   let hasViewTransitions = $state(false);
-  let isDark = $state(true);
+  let isDark = $state(false);
   let mobileMenuOpen = $state(false);
 
   const toTitleCase = (str: string) => {
@@ -32,6 +33,23 @@
 
   onNavigate((navigation) => {
     mobileMenuOpen = false;
+
+    const isRouteChange = navigation.from?.url.pathname !== navigation.to?.url.pathname;
+    const isCrossRouteAnchor = Boolean(navigation.to?.url.hash) && isRouteChange;
+
+    if (isRouteChange) {
+      document.documentElement.classList.add('route-navigation');
+
+      navigation.complete.finally(() => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.documentElement.classList.remove('route-navigation');
+          });
+        });
+      });
+    }
+
+    if (isCrossRouteAnchor) return;
 
     if (!hasViewTransitions) return;
 
@@ -57,150 +75,133 @@
 />
 
 <!-- Nav bar -->
-<nav class="sticky top-0 z-50 w-full border-b border-neutral/30 bg-base-300/80 backdrop-blur-md">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-12">
-    <div class="flex items-center gap-3">
-      <a href="/" class="wave-hand text-xl" aria-label="Home">
-        👋
-      </a>
-      <a
-        href="mailto:andrew@rubes.dev"
-        class="font-mono text-[11px] tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
-      >
-        available for hire
-      </a>
-    </div>
+<nav class="border-neutral bg-base-200/90 sticky top-0 z-50 w-full border-b backdrop-blur-xl">
+  <div
+    class="mx-auto flex h-[66px] max-w-[1440px] items-center justify-between px-5 md:px-8 lg:px-10"
+  >
+    <a
+      href="/"
+      aria-label="Andrew Rubenstein, home"
+      class="brand-link font-body text-base-content hover:text-primary inline-flex items-center gap-2 text-xl font-semibold tracking-[-0.05em] transition-colors duration-200 lg:ml-2"
+    >
+      <span class="inline-flex">
+        <span>rubes</span>
+        <span class="text-primary">.</span>
+        <span>dev</span>
+      </span>
+      <span class="wave-hand" aria-hidden="true">👋</span>
+    </a>
 
     <!-- Desktop nav -->
     <div class="hidden items-center gap-8 md:flex">
-      <a
-        href="/projects"
-        class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
-      >
-        Work
-      </a>
-      <a
-        href="/#experience"
-        class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
-      >
-        Experience
-      </a>
-      <a
-        href="/#writing"
-        class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
-      >
-        Writing
-      </a>
+      <div class="flex items-center gap-6">
+        <a
+          href="/projects"
+          class="font-body text-base-content/65 hover:text-base-content text-[13px] font-medium transition-colors duration-200"
+        >
+          work
+        </a>
+        <a
+          href="/"
+          class="font-body text-base-content/65 hover:text-base-content text-[13px] font-medium transition-colors duration-200"
+        >
+          experience
+        </a>
+      </div>
+
+      <span class="bg-neutral h-4 w-px" aria-hidden="true"></span>
+
       <a
         href="mailto:andrew@rubes.dev"
-        class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+        class="font-body text-base-content/60 hover:text-primary inline-flex items-center gap-1 text-[12px] font-medium transition-colors duration-200"
       >
-        Contact
+        available for hire
+        <ArrowUpRight size={14} strokeWidth={1.7} aria-hidden="true" />
       </a>
+
       <button
         onclick={toggleTheme}
-        aria-label="Toggle theme"
-        class="text-base-content/40 transition-colors duration-200 hover:text-base-content"
+        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        class="font-body text-base-content/55 hover:text-primary inline-flex items-center gap-2 text-[12px] font-medium transition-colors duration-200"
       >
         {#if isDark}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
+          <Sun size={15} strokeWidth={1.6} aria-hidden="true" />
+          <span>light</span>
         {:else}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+          <Moon size={15} strokeWidth={1.6} aria-hidden="true" />
+          <span>dark</span>
         {/if}
       </button>
     </div>
 
-    <!-- Mobile menu button -->
-    <div class="flex items-center gap-4 md:hidden">
+    <!-- Mobile controls -->
+    <div class="flex items-center gap-5 md:hidden">
       <button
         onclick={toggleTheme}
-        aria-label="Toggle theme"
-        class="text-base-content/40 transition-colors duration-200 hover:text-base-content"
+        aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        class="text-base-content/60 hover:text-primary transition-colors duration-200"
       >
         {#if isDark}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
+          <Sun size={18} strokeWidth={1.5} aria-hidden="true" />
         {:else}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+          <Moon size={18} strokeWidth={1.5} aria-hidden="true" />
         {/if}
       </button>
       <button
         onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-        aria-label="Toggle menu"
-        class="text-base-content/50 transition-colors duration-200 hover:text-base-content"
+        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={mobileMenuOpen}
+        class="text-base-content/60 hover:text-primary transition-colors duration-200"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          {#if mobileMenuOpen}
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          {:else}
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-          {/if}
-        </svg>
+        {#if mobileMenuOpen}
+          <X size={21} strokeWidth={1.5} aria-hidden="true" />
+        {:else}
+          <Menu size={21} strokeWidth={1.5} aria-hidden="true" />
+        {/if}
       </button>
     </div>
   </div>
 
   <!-- Mobile menu dropdown -->
   {#if mobileMenuOpen}
-    <div class="border-t border-neutral/20 px-4 py-4 md:hidden">
-      <div class="flex flex-col gap-4">
+    <div class="border-neutral bg-base-200/95 border-t px-5 py-7 backdrop-blur-xl md:hidden">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-6">
         <a
           href="/projects"
-          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-body text-base-content hover:text-primary text-2xl font-semibold tracking-[-0.045em] transition-colors duration-200"
         >
-          Work
+          work
+          <span class="text-primary">.</span>
         </a>
         <a
           href="/#experience"
-          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-body text-base-content hover:text-primary text-2xl font-semibold tracking-[-0.045em] transition-colors duration-200"
         >
-          Experience
-        </a>
-        <a
-          href="/#writing"
-          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
-        >
-          Writing
+          experience
+          <span class="text-primary">.</span>
         </a>
         <a
           href="mailto:andrew@rubes.dev"
-          class="font-mono text-xs tracking-wide text-base-content/50 transition-colors duration-200 hover:text-base-content"
+          class="font-body text-base-content hover:text-primary text-2xl font-semibold tracking-[-0.045em] transition-colors duration-200"
         >
-          Contact
+          contact
+          <span class="text-primary">.</span>
         </a>
       </div>
+
+      <a
+        href="mailto:andrew@rubes.dev"
+        class="border-neutral font-body text-base-content/60 hover:text-primary mt-7 flex items-center justify-between border-t pt-4 text-sm transition-colors duration-200"
+      >
+        <span>available for hire</span>
+        <ArrowUpRight size={16} strokeWidth={1.6} aria-hidden="true" />
+      </a>
     </div>
   {/if}
 </nav>
 
 <main class="flex min-h-dvh flex-col">
-  <div class="mx-auto w-full max-w-6xl flex-1 px-4 md:px-12">
+  <div class="mx-auto w-full max-w-[1440px] flex-1 px-5 md:px-8 lg:px-10">
     {@render children()}
   </div>
   <Footer />
@@ -248,24 +249,32 @@
   }
 
   @keyframes wave {
-    0% { transform: rotate(0deg); }
-    15% { transform: rotate(14deg); }
-    30% { transform: rotate(-8deg); }
-    45% { transform: rotate(14deg); }
-    60% { transform: rotate(-4deg); }
-    75% { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(16deg);
+    }
+    40% {
+      transform: rotate(-9deg);
+    }
+    60% {
+      transform: rotate(14deg);
+    }
+    80% {
+      transform: rotate(-5deg);
+    }
   }
 
   .wave-hand {
     display: inline-block;
-    transform-origin: 70% 70%;
-    animation: wave 1.5s ease-in-out 0.5s 1;
-    text-decoration: none;
+    transform-origin: 70% 75%;
+    animation: wave 1s ease-in-out 0.45s 1 both;
   }
 
-  .wave-hand:hover {
-    animation: wave 1s ease-in-out infinite;
+  .brand-link:hover .wave-hand {
+    animation: wave 0.9s ease-in-out 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -273,6 +282,11 @@
     :global(::view-transition-old(*)),
     :global(::view-transition-new(*)) {
       animation: none !important;
+    }
+
+    .wave-hand,
+    .brand-link:hover .wave-hand {
+      animation: none;
     }
   }
 </style>

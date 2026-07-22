@@ -3,32 +3,33 @@
 
   let { posts }: { posts: Post[] } = $props();
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+  const formatYear = (dateStr: string) => new Date(dateStr).getFullYear();
 </script>
 
-<section class="flex flex-col gap-8">
-  <span class="font-mono text-sm tracking-wider text-base-content/40">04 — writing</span>
+<section id="writing" class="scroll-mt-28">
+  <header class="mb-3 md:mb-2">
+    <h2
+      class="font-body text-base-content text-2xl font-semibold tracking-[-0.04em] lowercase md:text-xl"
+    >
+      writing
+      <span class="text-primary">.</span>
+    </h2>
+  </header>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-0.5">
     {#each posts as post, i}
       <a
         href={`/post/${post.slug}`}
-        class="group flex items-baseline justify-between gap-4 border-b border-neutral/30 py-4 transition-colors duration-200 first:border-t"
-        style="animation: fadeIn 0.5s ease-out {0.1 + i * 0.08}s both"
+        class="group hover:bg-base-100 -mx-3 grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-4 rounded-lg px-3 py-2.5 transition-colors duration-200"
+        style="animation: fadeIn 0.5s ease-out {0.08 + i * 0.08}s both"
       >
         <h3
-          class="text-base text-base-content transition-colors duration-200 group-hover:text-primary"
+          class="text-base-content group-hover:text-primary truncate text-[15px] leading-5 transition-colors duration-200 md:text-sm"
         >
           {post.title}
         </h3>
-        <span class="shrink-0 font-mono text-xs text-base-content/30">
-          {formatDate(post.date)}
+        <span class="text-base-content/35 font-mono text-[9px] tracking-[0.08em]">
+          {formatYear(post.date)}
         </span>
       </a>
     {/each}

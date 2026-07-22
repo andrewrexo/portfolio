@@ -1,10 +1,10 @@
 ---
 title: Aeven
-description: A persistent isometric MMORPG with an authoritative Rust server, cross-platform clients, data-driven gameplay, live-ops tooling, and a purpose-built world editor.
+description: An isometric pixel-art MMORPG with an authoritative server built in Rust. Large world spanning 500 chunks, active playerbase, interactive quests, and several bosses to fight.
 image: /aeven.webp
 github: https://github.com/andrewrexo/isometric-game
 demo: https://aeven.xyz
-priority: 2
+priority: -1
 published: true
 ---
 

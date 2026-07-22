@@ -1,6 +1,6 @@
 ---
-title: "Going Up: Adding a Z-Axis to a 2D Isometric World"
-description: "I thought adding height would mean adding one coordinate. It ended up touching physics, rendering, input, networking, and the map editor."
+title: "Adding a Z-Axis to a 2D Isometric World"
+description: "Considerations of physics, rendering, input, networking when adding a 3rd dimension to a 2D game."
 date: "2026-3-16"
 categories:
   - gamedev

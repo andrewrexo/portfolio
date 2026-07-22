@@ -4,8 +4,12 @@
   import type { Snippet } from 'svelte';
 
   let { data } = $props();
-  const { title, description, slug, github, demo } = data;
-  const content = data.content as Snippet;
+  const title = $derived(data.title);
+  const description = $derived(data.description);
+  const slug = $derived(data.slug);
+  const github = $derived(data.github);
+  const demo = $derived(data.demo);
+  const content = $derived(data.content as Snippet);
 
   const hasViewTransitions = 'startViewTransition' in document;
   const fromHome = $page.url.searchParams.get('from') === 'home';
@@ -26,52 +30,75 @@
   <link rel="canonical" href={`https://rubes.dev/projects/${slug}`} />
 </svelte:head>
 
-<article class="mx-auto w-full max-w-6xl py-12 md:py-16">
+<article class="mx-auto w-full max-w-5xl py-10 pb-20 md:py-16">
   <div
     style={hasViewTransitions ? `view-transition-name: content-${slug}` : ''}
-    class="animate-fade-in max-w-none"
+    class="animate-fade-in"
   >
-    <section class="mb-8 flex flex-col gap-6">
-      <a
-        href={fromHome ? '/' : '/projects'}
-        class="inline-flex items-center gap-1 font-mono text-sm tracking-wide text-base-content/30 transition-colors duration-200 hover:text-primary"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64"/></svg>
-        {fromHome ? 'back to home' : 'back to projects'}
-      </a>
-      <h1 class="font-display text-3xl text-base-content md:text-4xl">
-        {title}
-      </h1>
-      <p class="text-base font-light text-base-content/50">{description}</p>
-      {#if github || demo}
-        <div class="flex gap-4">
-          {#if github}
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-sm text-base-content/40 transition-colors duration-200 hover:text-primary"
-            >
-              <Github size="14" />
-              github
-            </a>
-          {/if}
-          {#if demo}
-            <a
-              href={demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 text-sm text-base-content/40 transition-colors duration-200 hover:text-primary"
-            >
-              live demo &nearr;
-            </a>
-          {/if}
+    <header>
+      <div class="flex flex-col gap-8">
+        <a
+          href={fromHome ? '/' : '/projects'}
+          class="text-base-content/45 hover:text-primary inline-flex items-center gap-2 self-start font-mono text-[10px] tracking-[0.14em] uppercase transition-colors duration-200"
+        >
+          <span aria-hidden="true">&larr;</span>
+          {fromHome ? 'back to home' : 'back to projects'}
+        </a>
+
+        <div class="flex flex-col gap-5">
+          <h1
+            class="font-body text-base-content max-w-4xl text-4xl leading-[0.98] font-semibold tracking-[-0.055em] md:text-6xl"
+          >
+            {title}<span class="text-primary">.</span>
+          </h1>
+          <p class="text-base-content/65 max-w-4xl text-[16px] leading-7">{description}</p>
         </div>
-      {/if}
-    </section>
-    <hr class="mb-8" />
-    <div class="prose prose-warm max-w-none">
-      {@render content()}
+
+        {#if github || demo}
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {#if demo}
+              <a
+                href={demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-base-content inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200"
+              >
+                live demo <span aria-hidden="true">&nearr;</span>
+              </a>
+            {/if}
+            {#if github}
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-base-content/55 hover:text-primary inline-flex items-center gap-2 text-sm transition-colors duration-200"
+              >
+                <Github size="15" />
+                github
+              </a>
+            {/if}
+          </div>
+        {/if}
+      </div>
+    </header>
+
+    <div class="mt-12 min-w-0 md:mt-16">
+      <div class="project-prose prose prose-warm max-w-none">
+        {@render content()}
+      </div>
     </div>
   </div>
 </article>
+
+<style>
+  :global(.project-prose > img:first-child) {
+    margin-bottom: 3.5rem;
+    border-radius: 0.5rem;
+  }
+
+  @media (max-width: 47.999rem) {
+    :global(.project-prose > img:first-child) {
+      margin-bottom: 2.5rem;
+    }
+  }
+</style>

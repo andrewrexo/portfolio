@@ -1,7 +1,8 @@
-<footer class="w-full px-4 py-8 md:px-12">
-  <hr class="mb-8" />
-  <div class="mx-auto flex max-w-6xl items-center justify-between">
-    <span class="font-mono text-xs text-base-content/30">
+<footer class="w-full px-5 py-10 md:px-8 lg:px-10">
+  <div
+    class="border-neutral mx-auto flex max-w-[1440px] items-center justify-between border-t pt-8"
+  >
+    <span class="text-base-content/50 font-mono text-[11px] tracking-[0.12em] uppercase">
       &copy; 2026 andrew rubenstein
     </span>
     <div class="flex items-center gap-4">
@@ -10,7 +11,7 @@
         href="https://github.com/andrewrexo"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-base-content/30 transition-colors duration-200 hover:text-primary"
+        class="text-base-content/55 hover:text-primary transition-colors duration-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +30,7 @@
         href="https://linkedin.com/in/andrew-rubenstein-702807261"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-base-content/30 transition-colors duration-200 hover:text-primary"
+        class="text-base-content/55 hover:text-primary transition-colors duration-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

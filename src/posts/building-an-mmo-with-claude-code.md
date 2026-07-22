@@ -6,7 +6,7 @@ categories:
   - rust
   - ai
 published: true
-image: /claude_code.png
+image: /claude-code-cover.webp
 ---
 
 I've built multiplayer games before. More than once, actually. I think every gamer secretly _wants_ to create their own dream game. One thing that I've learned about game development is that delivering your dream game can very easily grow to be too large for one person. Every attempt at achieving this dream taught me something new, then eventually collapsed under its own ambition.
