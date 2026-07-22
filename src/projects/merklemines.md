@@ -1,6 +1,6 @@
 ---
 title: Merkle Mines
-description: A provably-fair Bitcoin mines game with a full double-entry ledger, Web3 auth, and Lightning Network support. Every round is cryptographically verifiable.
+description: A Bitcoin mines game with provably fair rounds, a double-entry ledger, Web3 authentication, and Lightning Network support. Every round can be verified cryptographically.
 github: https://github.com/andrewrexo/satoshi-mines
 demo: https://merklemines.com
 image: /merklemines.webp

@@ -1,6 +1,6 @@
 ---
 title: Diffusion Canvas
-description: An infinite canvas for AI pixel art. Node-based Retro Diffusion generation with a built-in pixel editor, palette tools, and animation support — all in the browser.
+description: A browser-based canvas for making AI pixel art. It combines node-based Retro Diffusion generation with a pixel editor, palette tools, and animation support.
 github: https://github.com/andrewrexo/diffusion-canvas
 image: /diffusioncanvas.webp
 priority: 1

@@ -4,9 +4,9 @@ export const ssr = true;
 // Add SEO metadata
 export function load() {
   return {
-    title: 'Andrew Rubenstein - Frontend Developer',
+    title: 'Andrew Rubenstein - Software Engineer',
     description:
-      'From pixels to performance, I strive to make the web more wonderful. Looking for someone to build your next project? Drop me a line.',
+      'I build software for crypto and payment products, with a support background that helps me debug production issues, work with APIs, and build better internal tools.',
     icon: { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' }
   };
 }

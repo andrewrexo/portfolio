@@ -1,6 +1,6 @@
 ---
 title: EOProxy-TS
-description: An advanced proxy server built to intercept and modify incoming packets for a little-known MMO called Endless Online.
+description: A TypeScript proxy server for a little-known MMO called Endless Online. It can intercept and modify incoming packets.
 image: /eoproxyts.webp
 github: https://github.com/Qwiddle/eoproxy-ts
 published: true

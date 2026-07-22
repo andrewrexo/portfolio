@@ -1,6 +1,6 @@
 ---
 title: Aeven
-description: An isometric pixel-art MMORPG with an authoritative server built in Rust. Large world spanning 500 chunks, active playerbase, interactive quests, and several bosses to fight.
+description: An isometric pixel-art MMORPG with an authoritative Rust server. The world spans 500 chunks and has an active playerbase, interactive quests, and several bosses to fight.
 image: /aeven.webp
 github: https://github.com/andrewrexo/isometric-game
 demo: https://aeven.xyz

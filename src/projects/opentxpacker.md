@@ -1,6 +1,6 @@
 ---
 title: OpenTXPacker
-description: An open-source texture atlas packer built with Svelte 5 and Phaser 3. OpenTXPacker provides a modern, lightweight alternative to TexturePacker that's available to use via your browser.
+description: An open-source texture atlas packer built with Svelte 5 and Phaser 3. It runs in the browser and is meant to be a lightweight alternative to TexturePacker.
 image: /opentxpacker.webp
 github: https://github.com/andrewrexo/opentxpacker
 priority: 5
