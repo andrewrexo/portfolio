@@ -9,7 +9,7 @@
 <svelte:head>
   <title>{title} | rubes.dev</title>
   <meta name="description" content={description} />
-  <meta property="og_site_name" content="Andrew Rubenstein - Frontend Developer" />
+  <meta property="og_site_name" content="Andrew Rubenstein - Software Engineer" />
   <meta property="og:url" content="https://rubes.dev{$page.url.pathname.toString()}" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />

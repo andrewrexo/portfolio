@@ -17,9 +17,10 @@
       class="text-base-content/70 max-w-lg text-[15px] leading-6 md:text-base md:leading-relaxed"
       style="animation: fadeIn 0.7s ease-out 0.08s both"
     >
-      Design-minded engineer. I care about performance, polish, and the small decisions that
-      separate good software from great. I've been building across crypto and fintech, exchange
-      platforms, trading terminals, and tools that handle real money at scale.
+      I'm a software engineer who adapts quickly and is comfortable taking ownership of unfamiliar
+      systems. I've worked across implementation, production debugging, internal tooling, and
+      cross-team problem solving. My technical support background helps me investigate issues
+      thoroughly and explain technical decisions clearly.
     </p>
   </div>
 

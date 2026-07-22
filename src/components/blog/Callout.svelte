@@ -11,15 +11,16 @@
 
 <style>
   .callout {
-    background: oklch(0.17 0.01 260);
-    border: 1px solid oklch(0.25 0.01 260);
+    color: color-mix(in srgb, var(--color-base-content) 75%, transparent);
+    background: color-mix(in srgb, var(--color-base-content) 4%, var(--color-base-100));
+    border: 1px solid var(--color-neutral);
     border-radius: 0.375rem;
     padding: 1.5rem 1.75rem;
     margin: 2rem 0;
     font-size: 0.9rem;
   }
   .callout strong {
-    color: oklch(0.75 0.15 85);
+    color: var(--color-primary);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 0.8rem;
     letter-spacing: 0.06em;

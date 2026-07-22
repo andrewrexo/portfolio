@@ -10,7 +10,7 @@
       title: 'Frontend Engineer',
       period: 'Apr 2025 — Aug 2025',
       description:
-        'Led a full platform rewrite from a legacy Create React App codebase to a modern stack with TanStack Start and Zedux for state management, optimizing for low latency and high performance across an all-in-one crypto trading terminal.'
+        'Rebuilt a legacy Create React App trading terminal with TanStack Start and Zedux. The rewrite replaced its routing, data fetching, and state management while keeping the interface fast enough for live trading.'
     },
     {
       company: 'N.exchange',
@@ -20,17 +20,17 @@
       title: 'Frontend Engineer',
       period: 'Dec 2024 — Mar 2025',
       description:
-        'Fixed bugs, shipped new features, and improved page load speeds and SEO observability. Architected system protection measures to mitigate DDoS attacks and significantly cut infrastructure costs.'
+        'Worked across the frontend, analytics, and infrastructure of a live crypto exchange. I fixed production bugs, improved page speed and SEO observability, then added Cloudflare WAF rules and server-side rate limiting that cut Vercel costs by about 95%.'
     },
     {
       company: 'Exodus',
       url: 'https://exodus.com',
       logo: '/experience/exodus.svg',
       logoBackground: '#ffffff',
-      title: 'Support Lead → Project Manager',
+      title: 'Support Engineer → Team Lead → Project Manager',
       period: 'Feb 2021 — Jul 2024',
       description:
-        'Grew from front-line support into managing the team, then into project management over three years. As PM, shipped key revenue projects for exchange and fiat services. Led partner policy overhauls that significantly reduced transaction fees.'
+        'I started in customer support, moved into leading a 10-person senior support team, and later managed seven developers across two product teams. The work covered exchange and fiat products, where I used SQL, Grafana, APIs, logs, and provider dashboards to investigate transaction issues. I also built React/TypeScript tools for the support team and kept our first-response SLA under 10 minutes.'
     }
   ];
 </script>
@@ -52,12 +52,12 @@
   <div class="flex flex-col">
     {#each roles as role, i}
       <div
-        class="grid gap-3 py-5 sm:grid-cols-[minmax(150px,0.65fr)_minmax(0,1.35fr)] sm:gap-8 md:py-7"
+        class="grid items-start gap-3 py-5 sm:grid-cols-[minmax(150px,0.65fr)_minmax(0,1.35fr)] sm:gap-8 md:py-7"
         style="animation: fadeIn 0.5s ease-out {0.08 + i * 0.08}s both"
       >
-        <div class="flex items-start gap-3">
+        <div class="flex items-center gap-3">
           <div
-            class="border-neutral flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border p-1.5 shadow-sm"
+            class="border-neutral flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-lg border p-1.5 shadow-sm md:size-12"
             style:background-color={role.logoBackground}
           >
             <img src={role.logo} alt="" class="size-full object-contain" />

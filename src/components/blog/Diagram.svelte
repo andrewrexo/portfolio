@@ -14,8 +14,8 @@
 <style>
   .diagram-wrap {
     margin: 2.5rem 0;
-    background: oklch(0.17 0.01 260);
-    border: 1px solid oklch(0.25 0.01 260);
+    background: color-mix(in srgb, var(--color-base-content) 4%, var(--color-base-100));
+    border: 1px solid var(--color-neutral);
     border-radius: 0.625rem;
     overflow: hidden;
   }
@@ -23,11 +23,11 @@
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 0.75rem;
     font-weight: 600;
-    color: oklch(0.55 0.01 260);
+    color: color-mix(in srgb, var(--color-base-content) 55%, transparent);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.875rem 1.25rem;
-    border-bottom: 1px solid oklch(0.25 0.01 260);
+    border-bottom: 1px solid var(--color-neutral);
     margin: 0;
   }
   .diagram-body {
