@@ -1,6 +1,6 @@
 ---
 title: Aeven
-description: An isometric pixel-art MMORPG built entirely in Rust. Features real-time multiplayer combat, skill progression, Lua-scripted quests, and cross-platform support via native and WebAssembly builds.
+description: A persistent isometric MMORPG with an authoritative Rust server, cross-platform clients, data-driven gameplay, live-ops tooling, and a purpose-built world editor.
 image: /aeven.webp
 github: https://github.com/andrewrexo/isometric-game
 demo: https://aeven.xyz
@@ -8,30 +8,41 @@ priority: 2
 published: true
 ---
 
-<img style="view-transition-name: image-aeven" src="/aeven.webp" width="700" alt="Aeven" />
+<img style="view-transition-name: image-aeven" src="/aeven.webp" width="700" alt="Aeven gameplay showing an isometric town, character equipment, minimap, and action bar" />
 
 ## Overview
 
-Aeven is a fully playable isometric MMORPG built from the ground up in Rust. No engine, no framework, just raw Rust on both the client and server. The entire game runs in the browser via WebAssembly or as a native desktop app, with the same codebase powering both.
+Aeven is a persistent isometric MMORPG built around an authoritative Rust simulation. The server owns movement, combat, inventory, progression, trading, and world state, while a shared Macroquad client targets desktop, the browser through WebAssembly, and Android.
 
-This is the kind of project that touches every part of the stack. Networking, rendering, game logic, scripting, persistence, world building. It's been my playground for exploring what it takes to ship a real multiplayer game as a solo developer.
+The project spans far more than the game client: persistent accounts and characters, a chunk-streamed overworld, instanced interiors, Lua-scripted quests, public world statistics, operational control pages, a self-updating launcher, and a custom React studio for building and deploying maps and content. It is an end-to-end exploration of what it takes to operate a live multiplayer world as a solo developer.
 
 ## Features
 
-- **Server-authoritative multiplayer** running at a 20 Hz tick rate over WebSockets. The server owns all game state, so cheating is off the table. Clients send inputs, the server resolves everything
-- **Real-time combat** with click-to-target melee and ranged attacks, hit calculations, damage numbers, and death/respawn handling. Combat that actually feels responsive over the network
-- **RuneScape-style skill progression** with XP curves, level-up events, and skills spanning Hitpoints, Combat, and more. The kind of system that keeps players grinding
-- **Lua-scripted quests** with full dialogue trees, objectives, and reward payouts. Content creators can write new quests without touching Rust
-- **NPC AI state machines** handling idle behavior, wandering, aggro, combat, pathing, and shop interactions. NPCs feel alive, not like props
-- **Chunk-based world streaming** so the map can scale without loading the entire world into memory. Seamless transitions as players explore
-- **Recipe-based crafting and NPC shops** for a real in-game economy
-- **Cross-platform builds** from a single codebase. Play it in Chrome via WASM or download the native client
+- Persistent SQLite-backed accounts and characters in a chunk-streamed overworld with public and private interiors
+- Server-authoritative movement, collision, combat, inventory, trading, shops, drops, progression, rewards, and access control
+- Melee, ranged, and magic combat with equipment, prayers, spells, status effects, bosses, PvP arenas, and King of the Hill
+- Gathering and production skills including farming, fishing, mining, woodcutting, cooking, smithing, fletching, leatherworking, and alchemy
+- Lua-scripted quests with dialogue, objectives, rewards, and persisted state, backed by data-driven TOML and JSON content
+- Banking, equipment, chests, collection logs, waystones, player stalls, contracts, crafting orders, titles, and world-map discovery
+- Native desktop, browser/WASM, and Android clients built from the same Rust codebase
+- Public world statistics and authenticated live-operations pages for administering the running game
+- Purpose-built React map and content studio with validation, scoped users, asset importing, atomic writes, and explicit deployment controls
+- Self-updating desktop launcher with versioned release manifests and SHA-256 artifact verification
 
 ## Tech Stack
 
-- **Server:** Rust, Axum, Tokio, SQLite
-- **Client:** Rust, Macroquad
-- **Protocol:** MessagePack over WebSocket
-- **Quest Scripting:** Lua
-- **Game Data:** TOML configs
-- **Map Editor:** React + TypeScript (Tiled-compatible)
+- **Authoritative server:** Rust, Tokio, Axum
+- **Persistence:** SQLite in WAL mode, SQLx migrations
+- **Game client:** Rust, Macroquad
+- **Realtime protocol:** Versioned MessagePack over WebSocket with a shared Rust wire-contract crate
+- **Content:** Lua 5.4 quests, TOML gameplay data, versioned JSON maps
+- **Map and content studio:** React, TypeScript, Zustand, Express
+- **Public site and control UI:** SvelteKit, Svelte
+- **Launcher:** Rust, eframe/egui
+- **Delivery:** GitHub Actions, Python packaging tools, Cloudflare R2
+
+## Engineering Highlights
+
+- Server startup validates the complete content graph, including map dimensions, packed collision data, duplicate IDs, loot ranges, and cross-references between items, entities, quests, chests, and interiors
+- CI gates native and WASM builds, formatting, Clippy, Rust tests, frontend checks, npm audits, and a release-mode capacity test before production deployment
+- A synthetic 128-player full-tick benchmark runs at a 16.08 ms p95 and 17.44 ms p99 against the server's 50 ms tick budget
