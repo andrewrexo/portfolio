@@ -11,8 +11,16 @@ export async function load({ params }) {
       throw error(400, 'Invalid slug format');
     }
 
-    const posts = import.meta.glob('../../../posts/*.md');
-    const module = (await posts[`../../../posts/${params.slug}.md`]()) as {
+    const posts = import.meta.glob('../../../posts/*.{md,svx}');
+    const mdKey = `../../../posts/${params.slug}.md`;
+    const svxKey = `../../../posts/${params.slug}.svx`;
+    const loader = posts[mdKey] || posts[svxKey];
+
+    if (!loader) {
+      throw error(404, 'Post not found');
+    }
+
+    const module = (await loader()) as {
       metadata: Post;
       default: Snippet;
     };

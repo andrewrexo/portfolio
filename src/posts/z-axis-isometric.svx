@@ -1,0 +1,406 @@
+---
+title: "Going Up: Adding a Z-Axis to a 2D Isometric World"
+description: "I thought adding height would mean adding one coordinate. It ended up touching physics, rendering, input, networking, and the map editor."
+date: "2026-3-16"
+categories:
+  - gamedev
+  - architecture
+  - rendering
+published: true
+---
+
+<script>
+  import Diagram from '$components/blog/Diagram.svelte';
+  import Callout from '$components/blog/Callout.svelte';
+</script>
+
+Isometric games look like they have depth, but most of that depth is a very convincing lie. Everything still lives on a flat plane. Walking behind a building changes your Y coordinate. There is no real "above" or "below." The .5 in 2.5D is doing a lot of work.
+
+So I wanted to add actual height: raised terrain, cliffs, jumping, and gravity. My first thought was that this meant adding a Z coordinate to an entity. That part took almost no time. Then Z wandered into collision, rendering, pathfinding, networking, input, persistence, and the map editor.
+
+This is what I ended up with, including the choices that kept the system manageable and the parts that were less obvious than I expected. Clicking on a tile, for example, gets surprisingly weird once several different heights can occupy the same screen position.
+
+<figure class="not-prose mx-auto my-10 max-w-2xl">
+  <img
+    src="/z-axis-terrain.png"
+    alt="A player character standing on a raised grass platform made from several stacked elevation levels in an isometric game"
+    class="w-full rounded-lg border border-neutral"
+    style="image-rendering: pixelated;"
+  />
+  <figcaption class="mt-3 text-center text-sm text-base-content/60">
+    The first terrain test where Z was doing something visible: stacked tiles, cliff faces, and a character standing above the ground plane.
+  </figcaption>
+</figure>
+
+---
+
+## Where I put Z
+
+Players, NPCs, and anything else that moves need a height coordinate. The first decision was what type that coordinate should be. An integer made collision easy, but looked terrible if I rendered it directly. A float looked smooth, but I did not want fractional values leaking into the simulation.
+
+The useful answer was both. The simulation keeps Z as an integer, so physics and collision stay as grid math. The client keeps floating-point values and interpolates between updates. Once I stopped trying to make one representation do both jobs, the rest became much easier to reason about.
+
+Z alone is not enough. Each entity also needs a `grounded` flag, a jump timer, and a fall timer. Together, those values describe whether the entity is standing, rising, or falling.
+
+```rust
+// Authoritative simulation state
+struct Position {
+    x: i32,
+    y: i32,
+    z: i16,
+}
+
+struct VerticalState {
+    grounded: bool,
+    jump_ticks: u8,
+    fall_ticks: u8,
+}
+
+// Client-only rendering state
+struct RenderHeight {
+    server_z: f32,
+    target_z: f32,
+    render_z: f32,
+}
+```
+
+Only the integer Z is authoritative and crosses the network with X and Y. `RenderHeight` belongs to the client and can be as smooth and imprecise as it needs to be without affecting collision.
+
+### Storing terrain height
+
+My tile map is split into chunks, so height fits naturally into a per-chunk heightmap. One byte per tile is enough for 16 elevation levels, from 0 to 15, which is plenty here.
+
+That only describes the top of the terrain, though. As soon as one tile is taller than its neighbor, the exposed side needs a sprite too. I store those southwest and southeast cliff faces in two additional arrays.
+
+| Array | Type | Per Chunk | Purpose |
+|-------|------|-----------|---------|
+| **heightmap** | byte[] | 1 per tile | Per-tile elevation level (0–15) |
+| **faceSpritesSW** | uint16[] | 1 per tile | Sprite ID for the +Y (south-west) cliff face |
+| **faceSpritesSE** | uint16[] | 1 per tile | Sprite ID for the +X (south-east) cliff face |
+
+<Callout title="Sparse storage">
+  Most of the map is still flat, so these arrays are optional. I only allocate them when a chunk has height variation. When saving, an all-zero array gets dropped. Flat chunks use no extra memory in the map file and have no extra serialization cost.
+</Callout>
+
+---
+
+## The jump that was good enough
+
+I did not need continuous physics to make jumping work in a grid-based world. A symmetric, tick-based arc was simpler and matched the rest of the simulation.
+
+At 20 Hz, I use a six-tick jump: three ticks up and three ticks down, with Z changing by one each tick. The whole jump lasts 300ms and peaks three blocks above the starting point. It is quick enough to feel responsive and tall enough to clear something useful.
+
+<Diagram label="Jump Arc — Z Over Time (6 Ticks / 300ms)">
+  <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gArc" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g stroke="#1e2230" stroke-width="1">
+      <line x1="100" y1="60" x2="100" y2="260"/>
+      <line x1="100" y1="260" x2="660" y2="260"/>
+      <line x1="96" y1="210" x2="660" y2="210" stroke-dasharray="4,6" opacity="0.4"/>
+      <line x1="96" y1="160" x2="660" y2="160" stroke-dasharray="4,6" opacity="0.4"/>
+      <line x1="96" y1="110" x2="660" y2="110" stroke-dasharray="4,6" opacity="0.4"/>
+    </g>
+    <text x="85" y="264" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="#6b7280">Z+0</text>
+    <text x="85" y="214" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="#6b7280">Z+1</text>
+    <text x="85" y="164" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="#6b7280">Z+2</text>
+    <text x="85" y="114" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="#f59e0b">Z+3</text>
+    <text x="140" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T0</text>
+    <text x="220" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T1</text>
+    <text x="300" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T2</text>
+    <text x="380" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T3</text>
+    <text x="460" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T4</text>
+    <text x="540" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T5</text>
+    <text x="620" y="284" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#6b7280">T6</text>
+    <path d="M140,260 L220,210 L300,160 L380,110 L460,160 L540,210 L620,260 Z" fill="url(#gArc)"/>
+    <polyline points="140,260 220,210 300,160 380,110 460,160 540,210 620,260" fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="140" cy="260" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="220" cy="210" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="300" cy="160" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="380" cy="110" r="8" fill="#f59e0b" stroke="#f59e0b40" stroke-width="4"/>
+    <circle cx="460" cy="160" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="540" cy="210" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <circle cx="620" cy="260" r="6" fill="#0c0e13" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="380" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#f59e0b" font-weight="bold">PEAK</text>
+    <text x="260" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#10b981">▲ RISING (+1/tick)</text>
+    <text x="530" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#ef4444">▼ FALLING (-1/tick)</text>
+    <line x1="140" y1="52" x2="370" y2="52" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+    <line x1="390" y1="52" x2="620" y2="52" stroke="#ef4444" stroke-width="1" opacity="0.4"/>
+  </svg>
+</Diagram>
+
+The implementation is just a countdown. Jump input sets the timer to its maximum. Each simulation tick decrements it. The first half adds one to Z, and the second half subtracts one.
+
+```rust
+const JUMP_TICKS: u8 = 6;
+
+fn start_jump(body: &mut VerticalState) {
+    if body.grounded {
+        body.grounded = false;
+        body.jump_ticks = JUMP_TICKS;
+    }
+}
+
+fn tick_jump(position: &mut Position, body: &mut VerticalState) {
+    if body.jump_ticks == 0 {
+        return;
+    }
+
+    let rising = body.jump_ticks > JUMP_TICKS / 2;
+    position.z += if rising { 1 } else { -1 };
+    body.jump_ticks -= 1;
+}
+```
+
+Landing is a separate check. Once the entity reaches the terrain height or goes below it, I snap Z to the ground and set `grounded`.
+
+One choice mattered more than I expected: XY movement stays separate from the jump. A player can still walk, sprint, or change direction in the air. Z sits on top of the existing 2D movement instead of replacing it. It is simpler, and locking horizontal movement during a jump made a tile-based game feel unnecessarily sluggish.
+
+### Then I walked off an edge
+
+The jump arc handled one way of leaving the ground. It did nothing for walking off a cliff.
+
+That is a separate state: the entity is airborne, but it is not jumping. A constant fall speed looked like an elevator going down, so I used three gravity tiers instead. The fall starts slowly, speeds up, and reaches terminal velocity after a few ticks.
+
+The three speeds are easier to see as the tiny lookup table they actually are. The phase boundaries are tuning values, so I can change how long each stage lasts without touching the fall logic.
+
+```rust
+const FALL_EVERY: [u8; 3] = [3, 2, 1];
+
+fn tick_fall(position: &mut Position, body: &mut VerticalState) {
+    body.fall_ticks = body.fall_ticks.saturating_add(1);
+
+    // 0 = slow, 1 = medium, 2 = terminal velocity
+    let phase = gravity_phase(body.fall_ticks);
+    let interval = FALL_EVERY[phase];
+
+    if body.fall_ticks % interval == 0 {
+        position.z -= 1;
+    }
+}
+
+fn gravity_phase(fall_ticks: u8) -> usize {
+    match fall_ticks {
+        0..=3 => 0,
+        4..=7 => 1,
+        _ => 2,
+    }
+}
+```
+
+That works out to roughly 7 blocks per second, then 10, then 20 at a 20 Hz simulation rate. Stepping off a one-block ledge is barely noticeable, while a long fall quickly reaches terminal velocity. The whole thing costs one counter and an array lookup.
+
+---
+
+## Walking into cliffs
+
+Once tiles had different heights, the old horizontal movement rules were incomplete. A grounded entity can step onto an adjacent tile when the height difference is at most one block. I treat that as a curb and step up automatically. Anything taller is a wall.
+
+Airborne entities get a different rule. They can move over gaps freely, then fall when there is no ground beneath them.
+
+The actual rule fits in one function, which is a better explanation than another picture of two blocks:
+
+```rust
+const MAX_STEP: i16 = 1;
+
+fn can_step(from_z: i16, to_z: i16, airborne: bool) -> bool {
+    airborne || (to_z - from_z).abs() <= MAX_STEP
+}
+```
+
+The one-block auto-step made a big difference. Pressing jump for every curb would get old immediately. With the threshold, small slopes are easy to cross and cliffs still behave like obstacles. Most of the time, the player does not need to think about the rule at all.
+
+Pathfinding calls the same function for every neighboring tile. When an NPC moves, its simulation Z snaps straight to the destination tile's height. There is no reason to interpolate on the server. Instanced maps, such as dungeons and interiors, also need to look up height from their own heightmaps rather than the main world map.
+
+---
+
+## Keeping the server in charge
+
+Because this is multiplayer, Z has to be server-authoritative. The client only asks to jump. The server checks whether the entity is grounded, alive, and allowed to jump, then runs the physics and broadcasts the result through the existing state sync. The client never gets to declare its own height, so bypassing the rules requires a server-side exploit rather than a client hack.
+
+Fortunately, Z does almost nothing to the network budget. It is one integer beside the existing position fields. At typical tick rates with dozens of entities, that overhead is negligible. The jump request does not need a payload either. The server already has everything it needs.
+
+<Callout title="The cheap part">
+  If the protocol already syncs entity positions every tick, Z is almost free. I did not need a new message type, delta compression, or special encoding. It is one more integer in the existing update structure.
+</Callout>
+
+---
+
+## Making flat sprites look tall
+
+The simulation could now understand height, but the screen was still flat. For a standard 64 by 32 pixel isometric tile, half the tile height is a natural Z offset. That gives me 16 pixels per elevation level. Every sprite moves upward by `z × half_tile_h × zoom` pixels.
+
+That calculation was the easy part. Deciding what gets drawn in front of what was not.
+
+### Depth sorting
+
+The renderer uses the painter's algorithm and draws from back to front. Once height exists, the depth formula becomes `layer × 10000 + x + y + z`.
+
+Z has the same weight as X or Y here. An entity on a height-five plateau sorts the same as an entity five tiles farther southeast at ground level. Small offsets handle ties without turning the sort order into a pile of special cases.
+
+```rust
+enum DrawKind {
+    CliffFace,
+    Tile,
+    Wall,
+    Entity,
+}
+
+fn depth(layer: i32, position: Position, kind: DrawKind) -> f32 {
+    let base = (layer * 10_000 + position.x + position.y
+        + i32::from(position.z)) as f32;
+
+    base + match kind {
+        DrawKind::CliffFace => -0.2,
+        DrawKind::Tile      =>  0.0,
+        DrawKind::Wall      =>  0.1,
+        DrawKind::Entity    =>  0.2,
+    }
+}
+```
+
+### Cliff walls and cheap lighting
+
+Raising a tile exposes two edges in this isometric view: the **+X face** on the southeast and the **+Y face** on the southwest. The renderer has to fill both or the raised tile looks like it is floating. I can tile each face with a repeating wall sprite, then fall back to a solid polygon when there is no sprite.
+
+The faces looked too similar at full brightness, so I faked directional light. The southeast face renders at about **82%** brightness and the southwest face at about **65%**, as if the light comes from the upper right. Tile surfaces also get a small brightness bonus for each Z level and an ambient occlusion penalty when a taller neighbor blocks them. There is no real light source in the engine, but the difference is enough to make the terrain read as depth.
+
+<Diagram label="Directional Lighting — Face Brightness">
+  <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="580" cy="40" r="22" fill="#f59e0b20" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="580" y="45" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#f59e0b">☀</text>
+    <line x1="560" y1="55" x2="420" y2="130" stroke="#f59e0b40" stroke-width="1" stroke-dasharray="4,4"/>
+    <g transform="translate(200,60)">
+      <polygon points="0,80 160,160 160,240 0,160" fill="#4a3a20" opacity="0.65" stroke="#2a2f40" stroke-width="1.5"/>
+      <polygon points="160,160 320,80 320,160 160,240" fill="#5a4a28" opacity="0.82" stroke="#2a2f40" stroke-width="1.5"/>
+      <polygon points="160,0 320,80 160,160 0,80" fill="#5a7a38" stroke="#2a2f40" stroke-width="1.5"/>
+      <text x="65" y="160" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="16" fill="#e8ecf4" font-weight="bold">65%</text>
+      <text x="65" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#c8ccd4">+Y (SW)</text>
+      <text x="255" y="160" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="16" fill="#e8ecf4" font-weight="bold">82%</text>
+      <text x="255" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#c8ccd4">+X (SE)</text>
+      <text x="160" y="76" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#e8ecf4" font-weight="bold">100% base</text>
+      <text x="160" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#c8ccd4">+ bonus per Z level</text>
+    </g>
+  </svg>
+</Diagram>
+
+### Smoothing Z on the client
+
+Rendering the server's integer Z directly produced visible steps. The client instead keeps three floating-point values for every entity: the last authoritative Z, a target Z, and the current rendered Z that chases the target.
+
+Rising uses a constant interpolation speed because the jump arc looks clean at a fixed rate. Falling uses a speed based on distance, so short drops stay gentle and longer falls accelerate. It is the visual version of the server's gravity curve, without putting floats into the authoritative simulation.
+
+```rust
+fn update_render_height(height: &mut RenderHeight, dt: f32) {
+    let distance = (height.target_z - height.render_z).abs();
+    let speed = if height.target_z > height.render_z {
+        RISE_SPEED
+    } else {
+        FALL_SPEED * distance.max(1.0)
+    };
+
+    height.render_z = move_towards(
+        height.render_z,
+        height.target_z,
+        speed * dt,
+    );
+}
+```
+
+---
+
+## The click that could mean three tiles
+
+Tile picking was the part I underestimated. On a flat isometric map, a screen coordinate reverse-projects to one tile. With elevation, that same point can refer to several tiles at different heights. A surface at Z=3 can occupy the same screen pixel as a Z=0 tile three rows farther south.
+
+I solve that ambiguity with a **top-down probe**. It starts at the maximum Z level and works downward, reverse-projecting the cursor at each height. The first valid match wins, so the highest visible surface gets picked.
+
+<Diagram label="One Cursor — Two World Tiles">
+  <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="210,120 360,45 510,120 360,195" fill="#4a6030" stroke="#2a2f40" stroke-width="1.5"/>
+    <polygon points="210,120 360,195 360,250 210,175" fill="#3a3020" stroke="#2a2f40" stroke-width="1.5"/>
+    <polygon points="360,195 510,120 510,175 360,250" fill="#4a3a28" stroke="#2a2f40" stroke-width="1.5"/>
+
+    <polygon points="210,120 360,45 510,120 360,195" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="8,6" opacity="0.9"/>
+    <text x="92" y="62" font-family="JetBrains Mono,monospace" font-size="13" fill="#f59e0b" font-weight="bold">(x, y, Z=3)</text>
+    <line x1="190" y1="66" x2="270" y2="91" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="505" y="226" font-family="JetBrains Mono,monospace" font-size="13" fill="#3b82f6" font-weight="bold">(x, y+3, Z=0)</text>
+    <line x1="500" y1="216" x2="450" y2="170" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <circle cx="360" cy="120" r="8" fill="#0c0e13" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="346" y1="120" x2="374" y2="120" stroke="#f59e0b" stroke-width="1.5"/>
+    <line x1="360" y1="106" x2="360" y2="134" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="380" y="111" font-family="JetBrains Mono,monospace" font-size="12" fill="#f59e0b">cursor</text>
+    <text x="360" y="270" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#6b7280">Both tiles reverse-project to the same screen diamond</text>
+  </svg>
+</Diagram>
+
+The probe itself is a short loop. For each possible height, I undo that height's screen offset, convert the cursor back to world coordinates, and check whether the map agrees.
+
+```rust
+const MAX_Z: i16 = 15;
+const HALF_TILE_HEIGHT: f32 = 16.0;
+
+fn pick_tile(cursor: Vec2, map: &Map) -> Option<TilePos> {
+    for z in (0..=MAX_Z).rev() {
+        let projected = Vec2 {
+            x: cursor.x,
+            y: cursor.y + f32::from(z) * HALF_TILE_HEIGHT,
+        };
+        let (x, y) = screen_to_world(projected);
+
+        if map.height(x, y) == z
+            && cursor_is_on_diamond(cursor, x, y, z)
+        {
+            return Some(TilePos { x, y, z });
+        }
+    }
+
+    ground_tile_at(cursor)
+}
+```
+
+There is one extra check that is easy to miss. The cursor must land on the tile's diamond surface, not the cliff face below it. Without that test, a click near the bottom of a tall block selects its top surface even though the cursor is visibly on the wall. If the probe finds nothing, I fall back to the ground plane at Z=0.
+
+---
+
+## Making height editable
+
+At this point height worked, but building a map with it meant editing raw data. That was never going to last. The editor needed a height brush so elevation could be painted directly onto tiles like any other map data.
+
+The brush itself is straightforward. It reads the current chunk's heightmap, changes the value at the clicked tile index, and writes it back. The useful bit happens when the chunk is serialized. After every edit, I check whether the heightmap is all zeros and remove it if so. Most chunks are flat, and flat chunks should not carry height data.
+
+```js
+// Pseudocode: height painting with sparse storage
+let heights = chunk.heightmap ?? new ByteArray(TILES_PER_CHUNK);
+heights[tileIndex] = newHeight;
+
+// Drop all-zero arrays to save space
+if (heights.every(h => h === 0)) {
+  chunk.heightmap = null;
+}
+```
+
+I use the same zero-drop check for both cliff face sprite arrays. The three arrays add a few KB to a chunk that uses height. A flat chunk adds nothing.
+
+---
+
+## What I would keep
+
+The integer and float split did most of the architectural heavy lifting. The simulation never has to understand fractional height, while the renderer can still move smoothly between server updates.
+
+Keeping Z separate from XY movement also contained the damage. The jump system sits on top of movement. Pathfinding only adds a height check. Networking gets one field instead of a new family of messages. If adding Z requires rewriting all of XY movement, the axes are probably too tightly coupled.
+
+I would also keep the one-block auto-step. Small elevation changes should be boring to cross. Cliffs are where the player should have to make a decision.
+
+None of this required a 3D rendering pipeline. The cliff faces are repeating 2D sprites stacked vertically, and two brightness values create enough directional light to sell the shape. No meshes needed.
+
+Finally, the editor is part of the feature. If painting height is awkward, the maps will stay flat no matter how good the runtime code is.
+
+<Callout title="What surprised me">
+  The Z coordinate was the smallest part of adding a Z-axis. The actual feature was teaching collision, rendering, depth sorting, input, networking, persistence, pathfinding, and tooling what height means. That integration took the work, but it also made the flat isometric world feel like a place with actual terrain.
+</Callout>
