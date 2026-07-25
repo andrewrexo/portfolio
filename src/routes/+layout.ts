@@ -6,7 +6,7 @@ export function load() {
   return {
     title: 'Andrew Rubenstein - Software Engineer',
     description:
-      'I build software for crypto and payment products, with a support background that helps me debug production issues, work with APIs, and build better internal tools.',
+      'Software engineer who adapts quickly, takes ownership of unfamiliar systems, and works across implementation, production debugging, internal tooling, and technical support.',
     icon: { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' }
   };
 }
